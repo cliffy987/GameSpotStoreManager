@@ -1,0 +1,11 @@
+com\mycompany\gamespotstoremanager\Publisher.class
+com\mycompany\gamespotstoremanager\MainApp.class
+com\mycompany\gamespotstoremanager\GameDAO.class
+com\mycompany\gamespotstoremanager\GenreDAO.class
+module-info.class
+com\mycompany\gamespotstoremanager\Genre.class
+com\mycompany\gamespotstoremanager\PublisherDAO.class
+com\mycompany\gamespotstoremanager\Game.class
+com\mycompany\gamespotstoremanager\DatabaseConnector.class
+com\mycompany\gamespotstoremanager\FXGameSearchController.class
+com\mycompany\gamespotstoremanager\FXMainMenuController.class
