@@ -150,4 +150,8 @@ public class GameDAO {
         setupIdEsrb();
         return IdEsrb.get(esrbId);
     }
+    
+    public static ArrayList<Game> searchGames(String name, String genre, String publisher, int esrbId) {
+        return null;
+    }
 }

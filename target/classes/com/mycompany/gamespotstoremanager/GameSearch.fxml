@@ -22,8 +22,8 @@
       <VBox layoutX="31.0" layoutY="69.0" prefHeight="145.0" prefWidth="264.0" spacing="10.0">
          <children>
             <TextField fx:id="nameField" onAction="#nameFieldUpdated" prefHeight="25.0" prefWidth="195.0" promptText="Name" />
-            <TextField fx:id="genreField" prefHeight="25.0" prefWidth="195.0" promptText="Genre" />
-            <TextField fx:id="publisherField" prefHeight="25.0" prefWidth="195.0" promptText="Publisher" />
+            <TextField fx:id="genreField" onAction="#genreFieldUpdated" prefHeight="25.0" prefWidth="195.0" promptText="Genre" />
+            <TextField fx:id="publisherField" onAction="#publisherFieldUpdated" prefHeight="25.0" prefWidth="195.0" promptText="Publisher" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <MenuButton fx:id="ratingMenu" mnemonicParsing="false" text="Rating">
@@ -49,7 +49,7 @@
             <TableColumn minWidth="0.0" prefWidth="45.0" text="Rating" />
         </columns>
       </TableView>
-      <Button layoutX="31.0" layoutY="397.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
+      <Button layoutX="31.0" layoutY="397.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
       <Button layoutX="403.0" layoutY="397.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="View Game Info" />
       <Button layoutX="403.0" layoutY="170.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Search" />
    </children>
