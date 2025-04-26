@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -21,17 +22,23 @@
       <VBox layoutX="31.0" layoutY="69.0" prefHeight="145.0" prefWidth="264.0" spacing="10.0">
          <children>
             <TextField fx:id="nameField" onAction="#nameFieldUpdated" prefHeight="25.0" prefWidth="195.0" promptText="Name" />
-            <TextField prefHeight="25.0" prefWidth="195.0" promptText="Genre" />
-            <TextField prefHeight="25.0" prefWidth="195.0" promptText="Publisher" />
-            <MenuButton mnemonicParsing="false" text="Rating">
-              <items>
-                <MenuItem mnemonicParsing="false" text="NR" />
-                <MenuItem mnemonicParsing="false" text="E" />
-                <MenuItem mnemonicParsing="false" text="E10+" />
-                <MenuItem mnemonicParsing="false" text="T" />
-                <MenuItem mnemonicParsing="false" text="M" />
-              </items>
-            </MenuButton>
+            <TextField fx:id="genreField" onAction="#genreFieldUpdated" prefHeight="25.0" prefWidth="195.0" promptText="Genre" />
+            <TextField fx:id="publisherField" onAction="#publisherFieldUpdated" prefHeight="25.0" prefWidth="195.0" promptText="Publisher" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <MenuButton fx:id="ratingMenu" mnemonicParsing="false" text="Rating">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="All" />
+                      <MenuItem mnemonicParsing="false" text="NR" />
+                      <MenuItem mnemonicParsing="false" text="E" />
+                      <MenuItem mnemonicParsing="false" text="E10+" />
+                      <MenuItem mnemonicParsing="false" text="T" />
+                      <MenuItem mnemonicParsing="false" text="M" />
+                    </items>
+                  </MenuButton>
+                  <Text fx:id="ratingText" strokeType="OUTSIDE" strokeWidth="0.0" text="Any" translateX="10.0" translateY="5.0" />
+               </children>
+            </HBox>
          </children>
       </VBox>
       <TableView layoutX="31.0" layoutY="214.0" prefHeight="164.0" prefWidth="536.0">
@@ -42,7 +49,7 @@
             <TableColumn minWidth="0.0" prefWidth="45.0" text="Rating" />
         </columns>
       </TableView>
-      <Button layoutX="31.0" layoutY="397.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
+      <Button layoutX="31.0" layoutY="397.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
       <Button layoutX="403.0" layoutY="397.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="View Game Info" />
       <Button layoutX="403.0" layoutY="170.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Search" />
    </children>
