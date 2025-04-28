@@ -155,44 +155,62 @@ public class GameDAO {
         if (current.isEmpty())
             current += " WHERE " + concat;
         else
-            current += " AND" + concat;
+            current += " AND " + concat;
         return current;
     }
     
-    public static ArrayList<Game> searchGames(String name, String genre, String publisher, int esrbId) {
-        try {
-        Connection connection = DatabaseConnector.getConnection();
+    public static ArrayList<GameSearchData> searchGames(String name, String genre, String publisher, int esrbId) {
+        try (Connection connection = DatabaseConnector.getConnection()) {
         
-        String sql = "SELECT * FROM game_search";
-        String whereSql = "";
-        
-        //Add search conditions if they're wanted
-        if (name.isEmpty() == false) {
-            String concatString = "search_game_name = " + name;
-            concatWhereSql(whereSql, concatString);
-        } else if (genre.isEmpty() == false) {
-            String concatString = "search_genre_name = " + genre;
-            concatWhereSql(whereSql, concatString);
-        } else if (publisher.isEmpty() == false) {
-            String concatString = "search_publisher_name = " + publisher;
-            concatWhereSql(whereSql, concatString);
-        } else if (publisher.isEmpty() == false) {
-            String concatString = "search_esrb_id = " + esrbId;
-            concatWhereSql(whereSql, concatString);
-        }
-        
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
+            ArrayList<GameSearchData> gameSearchList = new ArrayList<>();
 
-        while (resultSet.next()) { 
-            //Create an object for each game
-            int esrbId = resultSet.getInt("esrb_id");
-            String esrbRating = resultSet.getString("rating");
-            IdEsrb.put(esrbId, esrbRating);
-        }
-        
+            String sql = "SELECT DISTINCT search_game_id, search_game_name, search_esrb_id FROM game_search";
+            String whereSql = "";
+
+            //Add search conditions if they're wanted
+            if (name.isEmpty() == false) {
+                String concatString = "search_game_name = " + "\"" + name + "\"";
+                whereSql = concatWhereSql(whereSql, concatString);
+            }
+            if (genre.isEmpty() == false) {
+                String concatString = "search_genre_name = " + "\"" + genre + "\"";
+                whereSql = concatWhereSql(whereSql, concatString);
+            }
+            if (publisher.isEmpty() == false) {
+                String concatString = "search_publisher_name = " + "\"" + publisher + "\"";
+                whereSql = concatWhereSql(whereSql, concatString);
+            }
+            if (esrbId != -1) {
+                String concatString = "search_esrb_id = " + esrbId;
+                whereSql = concatWhereSql(whereSql, concatString);
+            }
+            
+            String finalSql = sql + whereSql;
+            
+            System.out.println(finalSql);
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(finalSql);
+
+            //Create object for each search result
+            while (resultSet.next()) { 
+                //(search_game_id, search_game_name, search_genre_name, search_publisher_name, search_esrb_id)
+                long gameId = resultSet.getLong("search_game_id");
+                String gameName = resultSet.getString("search_game_name");
+                String gameGenres = GenreDAO.getGenresStringForGameId(gameId);
+                String gamePublishers = PublisherDAO.getPublishersStringForGameId(gameId);
+                String gameRating = getEsrbFromId(resultSet.getInt("search_esrb_id"));
+
+                GameSearchData gameSearch = new GameSearchData(gameId, gameName, gameGenres, gamePublishers, gameRating);
+                gameSearchList.add(gameSearch);
+            }
+            
+            return gameSearchList;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return null;
     }
 }

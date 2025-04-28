@@ -55,40 +55,15 @@ public class FXGameSearchController implements Initializable {
         publisherEntered = publisherField.getText();
     }
     
+    @FXML
     private void searchPressed() {
         //Just in case user didn't press "Enter"
         nameFieldUpdated();
+        genreFieldUpdated();
+        publisherFieldUpdated();
         
-        //Make use of GameDAO's searchGames method to get an array of games
-        ArrayList<Game> gameList = GameDAO.searchGames(nameEntered, genreEntered, publisherEntered, esrbId);
-        ArrayList<GameSearchData> gameSearchList = new ArrayList<GameSearchData>();
-        
-        //Create display-strings, wrap them in a GameSearchData container object, 
-        //and add them to the gameSearchList array
-        for (Game game : gameList) {
-            String gameName = game.getGameName();
-            
-            String gameGenres = "";
-            
-            for (int i = 0; i < game.genreList.size(); i++) {
-                Genre genre = game.genreList.get(i);
-                gameGenres += genre.getName();
-                if (i + 1 < game.genreList.size())
-                    gameGenres += ", ";
-            }
-            
-            String gamePublishers = "";
-            for (int i = 0; i < game.publisherList.size(); i++) {
-                Publisher publisher = game.publisherList.get(i);
-                gamePublishers += publisher.getName();
-                if (i + 1 < game.publisherList.size())
-                    gamePublishers += ", ";
-            }
-            
-            String gameEsrb = game.getEsrb();
-            
-            gameSearchList.add(new GameSearchData(gameName, gameGenres, gamePublishers, gameEsrb));
-        }
+        //Make use of GameDAO's searchGames method to get an array of games search data
+        ArrayList<GameSearchData> gameSearchList = GameDAO.searchGames(nameEntered, genreEntered, publisherEntered, esrbId);
         
         //Create setCellValueFactories and display the search results
         ObservableList<GameSearchData> observableGames = FXCollections.observableArrayList(gameSearchList);
@@ -102,6 +77,7 @@ public class FXGameSearchController implements Initializable {
         
     }
     
+    @FXML
     private void viewGamePressed() {
         //Get the select game data
         GameSearchData gameData = gameViewTable.getSelectionModel().getSelectedItem();

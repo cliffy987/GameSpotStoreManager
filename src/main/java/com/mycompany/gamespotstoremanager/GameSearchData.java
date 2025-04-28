@@ -9,12 +9,14 @@ package com.mycompany.gamespotstoremanager;
  * @author ebwhi
  */
 public class GameSearchData {
+    private long gameId;
     private String gameName;
     private String gameGenres;
     private String gamePublishers;
     private String gameRating;
 
-    GameSearchData(String gameName, String gameGenres, String gamePublishers, String gameRating) {
+    GameSearchData(long gameId, String gameName, String gameGenres, String gamePublishers, String gameRating) {
+        this.gameId = gameId;
         this.gameName = gameName;
         this.gameGenres = gameGenres;
         this.gamePublishers = gamePublishers;
@@ -75,5 +77,19 @@ public class GameSearchData {
      */
     public void setGameRating(String gameRating) {
         this.gameRating = gameRating;
+    }
+
+    /**
+     * @return the gameId
+     */
+    public long getGameId() {
+        return gameId;
+    }
+
+    /**
+     * @param gameId the gameId to set
+     */
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
     }
 }
