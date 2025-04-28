@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.gamespotstoremanager.FXGameViewController">
+   <children>
+      <Text layoutX="202.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[Game] Info">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Text>
+      <VBox layoutX="31.0" layoutY="69.0" prefHeight="145.0" prefWidth="536.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name: ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre(s):">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publisher(s)">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age Rating:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Price:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Price:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+      <TableView layoutX="32.0" layoutY="257.0" prefHeight="164.0" prefWidth="536.0">
+        <columns>
+          <TableColumn prefWidth="150.0" text="Condition" />
+            <TableColumn prefWidth="150.0" text="Price" />
+        </columns>
+      </TableView>
+      <Button layoutX="31.0" layoutY="460.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Return" />
+      <Button layoutX="403.0" layoutY="460.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="View Game Info" />
+      <Text layoutX="31.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Used Copies:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Button layoutX="403.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Add New Copy to Cart" />
+      <Button layoutX="403.0" layoutY="428.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Add Used Copy to Cart" />
+      <Button layoutX="137.0" layoutY="460.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
+   </children>
+</AnchorPane>

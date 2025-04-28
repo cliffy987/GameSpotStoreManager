@@ -151,7 +151,48 @@ public class GameDAO {
         return IdEsrb.get(esrbId);
     }
     
+    private static String concatWhereSql(String current, String concat) {
+        if (current.isEmpty())
+            current += " WHERE " + concat;
+        else
+            current += " AND" + concat;
+        return current;
+    }
+    
     public static ArrayList<Game> searchGames(String name, String genre, String publisher, int esrbId) {
-        return null;
+        try {
+        Connection connection = DatabaseConnector.getConnection();
+        
+        String sql = "SELECT * FROM game_search";
+        String whereSql = "";
+        
+        //Add search conditions if they're wanted
+        if (name.isEmpty() == false) {
+            String concatString = "search_game_name = " + name;
+            concatWhereSql(whereSql, concatString);
+        } else if (genre.isEmpty() == false) {
+            String concatString = "search_genre_name = " + genre;
+            concatWhereSql(whereSql, concatString);
+        } else if (publisher.isEmpty() == false) {
+            String concatString = "search_publisher_name = " + publisher;
+            concatWhereSql(whereSql, concatString);
+        } else if (publisher.isEmpty() == false) {
+            String concatString = "search_esrb_id = " + esrbId;
+            concatWhereSql(whereSql, concatString);
+        }
+        
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) { 
+            //Create an object for each game
+            int esrbId = resultSet.getInt("esrb_id");
+            String esrbRating = resultSet.getString("rating");
+            IdEsrb.put(esrbId, esrbRating);
+        }
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

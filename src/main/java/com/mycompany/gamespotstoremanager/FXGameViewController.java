@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-public class FXGameSearchController implements Initializable {
+public class FXGameViewController implements Initializable {
 
     @FXML private TextField nameField;
     @FXML private TextField genreField;
