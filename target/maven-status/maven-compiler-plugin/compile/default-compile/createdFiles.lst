@@ -1,4 +1,6 @@
+com\mycompany\gamespotstoremanager\FXController.class
 com\mycompany\gamespotstoremanager\Publisher.class
+com\mycompany\gamespotstoremanager\UsedGame.class
 com\mycompany\gamespotstoremanager\MainApp.class
 com\mycompany\gamespotstoremanager\GameDAO.class
 com\mycompany\gamespotstoremanager\GenreDAO.class
@@ -9,5 +11,7 @@ com\mycompany\gamespotstoremanager\PublisherDAO.class
 com\mycompany\gamespotstoremanager\FXGameViewController.class
 com\mycompany\gamespotstoremanager\Game.class
 com\mycompany\gamespotstoremanager\DatabaseConnector.class
+com\mycompany\gamespotstoremanager\FXCheckoutController.class
 com\mycompany\gamespotstoremanager\FXGameSearchController.class
+com\mycompany\gamespotstoremanager\GamePurchaseData.class
 com\mycompany\gamespotstoremanager\FXMainMenuController.class

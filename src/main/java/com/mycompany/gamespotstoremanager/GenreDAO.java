@@ -25,8 +25,7 @@ public class GenreDAO {
         allGenresList = new ArrayList<Genre>();
         IdGenres = new HashMap<Long, Genre>();
         //Create IdGenre list
-        try {
-            Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = DatabaseConnector.getConnection()) {
 
             String sql = "SELECT * FROM genres";
             Statement statement = connection.createStatement();
@@ -59,8 +58,7 @@ public class GenreDAO {
     public static ArrayList<Genre> getAllGenresForGameId(long gameId) {
         setupIdGenres();
         
-        try {
-            Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = DatabaseConnector.getConnection()) {
 
             String sql = "SELECT * FROM game_genres WHERE game_id = " + gameId;
             Statement statement = connection.createStatement();
@@ -84,8 +82,7 @@ public class GenreDAO {
     }
     
     public static String getGenresStringForGameId(long gameId) {
-        try {
-            Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = DatabaseConnector.getConnection()) {
 
             String sql = "CALL get_genres_string(?)";
             PreparedStatement call = connection.prepareCall(sql);

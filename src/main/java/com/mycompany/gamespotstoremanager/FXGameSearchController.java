@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-public class FXGameSearchController implements Initializable {
+public class FXGameSearchController extends FXController {
 
     @FXML private TextField nameField;
     @FXML private TextField genreField;
@@ -35,10 +35,7 @@ public class FXGameSearchController implements Initializable {
     private String publisherEntered = "";
     private int esrbId = -1;
     
-    @FXML
-    private void switchToMainMenu() throws IOException {
-        MainApp.setRoot("MainMenu");
-    }
+    
     
     @FXML
     private void nameFieldUpdated() {
@@ -78,9 +75,11 @@ public class FXGameSearchController implements Initializable {
     }
     
     @FXML
-    private void viewGamePressed() {
-        //Get the select game data
+    private void viewGamePressed() throws IOException {
+        //Get the select game data and switch to GameView
         GameSearchData gameData = gameViewTable.getSelectionModel().getSelectedItem();
+        FXGameViewController.setGameData(gameData);
+        MainApp.setRoot("GameView");
     }
 
     @Override
