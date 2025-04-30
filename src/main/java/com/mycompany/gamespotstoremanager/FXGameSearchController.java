@@ -24,11 +24,11 @@ public class FXGameSearchController extends FXController {
     @FXML private TextField publisherField;
     @FXML private MenuButton ratingMenu;
     @FXML private Text ratingText;
-    @FXML private TableView<GameSearchData> gameViewTable;
-    @FXML private TableColumn<GameSearchData, String> nameColumn;
-    @FXML private TableColumn<GameSearchData, String> genresColumn;
-    @FXML private TableColumn<GameSearchData, String> publishersColumn;
-    @FXML private TableColumn<GameSearchData, String> ratingColumn;
+    @FXML private TableView<GameData> gameViewTable;
+    @FXML private TableColumn<GameData, String> nameColumn;
+    @FXML private TableColumn<GameData, String> genresColumn;
+    @FXML private TableColumn<GameData, String> publishersColumn;
+    @FXML private TableColumn<GameData, String> ratingColumn;
     
     private String nameEntered = "";
     private String genreEntered = "";
@@ -60,15 +60,15 @@ public class FXGameSearchController extends FXController {
         publisherFieldUpdated();
         
         //Make use of GameDAO's searchGames method to get an array of games search data
-        ArrayList<GameSearchData> gameSearchList = GameDAO.searchGames(nameEntered, genreEntered, publisherEntered, esrbId);
+        ArrayList<GameData> gameSearchList = GameDAO.searchGames(nameEntered, genreEntered, publisherEntered, esrbId);
         
         //Create setCellValueFactories and display the search results
-        ObservableList<GameSearchData> observableGames = FXCollections.observableArrayList(gameSearchList);
+        ObservableList<GameData> observableGames = FXCollections.observableArrayList(gameSearchList);
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory<GameSearchData, String>("gameName"));
-        genresColumn.setCellValueFactory(new PropertyValueFactory<GameSearchData, String>("gameGenres"));
-        publishersColumn.setCellValueFactory(new PropertyValueFactory<GameSearchData, String>("gamePublishers"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<GameSearchData, String>("gameRating"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gameName"));
+        genresColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gameGenres"));
+        publishersColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gamePublishers"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gameRating"));
 
         gameViewTable.setItems(observableGames);
         
@@ -77,7 +77,7 @@ public class FXGameSearchController extends FXController {
     @FXML
     private void viewGamePressed() throws IOException {
         //Get the select game data and switch to GameView
-        GameSearchData gameData = gameViewTable.getSelectionModel().getSelectedItem();
+        GameData gameData = gameViewTable.getSelectionModel().getSelectedItem();
         FXGameViewController.setGameData(gameData);
         MainApp.setRoot("GameView");
     }

@@ -179,7 +179,7 @@ public class GameDAO {
         return -1;
     }
     
-    public static GamePurchaseData getNewGamePurchaseData(GameSearchData gameSearch) {
+    public static GamePurchaseData getNewGamePurchaseData(GameData gameSearch) {
         try (Connection connection = DatabaseConnector.getConnection()) {
         
             String gameSql = "SELECT * FROM fixed_price_stock WHERE game_id = " + gameSearch.getGameId();
@@ -199,10 +199,10 @@ public class GameDAO {
         return null;
     }
     
-    public static ArrayList<GameSearchData> searchGames(String name, String genre, String publisher, int esrbId) {
+    public static ArrayList<GameData> searchGames(String name, String genre, String publisher, int esrbId) {
         try (Connection connection = DatabaseConnector.getConnection()) {
         
-            ArrayList<GameSearchData> gameSearchList = new ArrayList<>();
+            ArrayList<GameData> gameSearchList = new ArrayList<>();
 
             String sql = "SELECT DISTINCT search_game_id, search_game_name, search_esrb_id FROM game_search";
             String whereSql = "";
@@ -241,7 +241,7 @@ public class GameDAO {
                 String gamePublishers = PublisherDAO.getPublishersStringForGameId(gameId);
                 String gameRating = getEsrbFromId(resultSet.getInt("search_esrb_id"));
 
-                GameSearchData gameSearch = new GameSearchData(gameId, gameName, gameGenres, gamePublishers, gameRating);
+                GameData gameSearch = new GameData(gameId, gameName, gameGenres, gamePublishers, gameRating);
                 gameSearchList.add(gameSearch);
             }
             

@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 
 public class FXGameViewController extends FXController {
 
-    private static GameSearchData gameData;
+    private static GameData gameData;
     
     private GamePurchaseData newPurchase;
     
@@ -34,13 +34,22 @@ public class FXGameViewController extends FXController {
     @FXML private Text ratingText;
     @FXML private Text newPriceText;
     @FXML private Text newQuantityText;
+    
+    @FXML private TableView<UsedGame> usedGameViewTable;
+    @FXML private TableColumn<UsedGame, Double> usedPriceColumn;
+    @FXML private TableColumn<UsedGame, String> usedConditionColumn;
 
-    public static GameSearchData getGameData() {
+    public static GameData getGameData() {
         return gameData;
     }
     
-    public static void setGameData(GameSearchData newData) {
+    public static void setGameData(GameData newData) {
         gameData = newData;
+    }
+    
+    @FXML
+    private void returnPressed() throws IOException {
+        MainApp.setRoot("GameSearch");
     }
     
     @FXML
@@ -59,6 +68,12 @@ public class FXGameViewController extends FXController {
         }
     }
     
+    @FXML
+    private void addUsedToCart() {
+        UsedGame usedGame = usedGameViewTable.getSelectionModel().getSelectedItem();
+        
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         newPurchase = GameDAO.getNewGamePurchaseData(gameData);
@@ -74,5 +89,29 @@ public class FXGameViewController extends FXController {
         ratingText.setText("Age Rating: " + gameData.getGameRating());
         newPriceText.setText("New Price: " + newPurchase.getGamePrice());
         newQuantityText.setText("New Quantity: " + tempQuantity.get(gameData.getGameId()));
+        
+        ArrayList<UsedGame> usedGames;
+        
+        if (tempUsedGames.containsKey(gameData.getGameId()) == false) {
+            //Get array of usedGames for this gameId
+            usedGames = UsedGameDAO.getUsedGamesFromGameData(gameData);
+        
+            for (UsedGame usedGame : usedGames) {
+                tempUsedGames.put(gameData.getGameId(), usedGames);
+            }
+        }
+        else {
+            //Retreive list of used games for this gameId  
+            usedGames = tempUsedGames.get(gameData.getGameId());
+        }
+        
+        //Create setCellValueFactories and display the search results
+        ObservableList<UsedGame> observableUsedGames = FXCollections.observableArrayList(usedGames);
+
+        usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
+        usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));
+
+
+        usedGameViewTable.setItems(observableUsedGames);
     }
 }

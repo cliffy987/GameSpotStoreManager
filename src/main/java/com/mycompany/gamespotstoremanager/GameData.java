@@ -8,14 +8,14 @@ package com.mycompany.gamespotstoremanager;
  *
  * @author ebwhi
  */
-public class GameSearchData {
+public class GameData {
     private long gameId;
     private String gameName;
     private String gameGenres;
     private String gamePublishers;
     private String gameRating;
 
-    GameSearchData(long gameId, String gameName, String gameGenres, String gamePublishers, String gameRating) {
+    GameData(long gameId, String gameName, String gameGenres, String gamePublishers, String gameRating) {
         this.gameId = gameId;
         this.gameName = gameName;
         this.gameGenres = gameGenres;

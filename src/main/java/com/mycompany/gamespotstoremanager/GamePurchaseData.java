@@ -8,19 +8,19 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class GamePurchaseData {
-    private GameSearchData gameData;
+    private GameData gameData;
     private double gamePrice;
     private long gameQuantity;
     private long usedId;
     
-    public GamePurchaseData(GameSearchData gameData, double gamePrice, long gameQuantity) {
+    public GamePurchaseData(GameData gameData, double gamePrice, long gameQuantity) {
         this.gameData = gameData;
         this.gamePrice = gamePrice;
         this.gameQuantity = gameQuantity;
         this.usedId = -1;
     }
     
-    public GamePurchaseData(GameSearchData gameData, double gamePrice, long gameQuantity, long usedId) {
+    public GamePurchaseData(GameData gameData, double gamePrice, long gameQuantity, long usedId) {
         this.gameData = gameData;
         this.gamePrice = gamePrice;
         this.gameQuantity = gameQuantity;
@@ -30,14 +30,14 @@ public class GamePurchaseData {
     /**
      * @return the gameData
      */
-    public GameSearchData getGameData() {
+    public GameData getGameData() {
         return gameData;
     }
 
     /**
      * @param gameData the gameData to set
      */
-    public void setGameData(GameSearchData gameData) {
+    public void setGameData(GameData gameData) {
         this.gameData = gameData;
     }
 

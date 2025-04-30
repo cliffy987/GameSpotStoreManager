@@ -9,28 +9,44 @@ package com.mycompany.gamespotstoremanager;
  * @author ebwhi
  */
 public class UsedGame {
-    private long gameId;
+    private long usedId;
+    private GameData gameData;
     private double price;
     private String condition;
     
-    public UsedGame(long gameId, double price, String condition) {
-        this.gameId = gameId;
+    public UsedGame(long usedId, GameData gameData, double price, String condition) {
+        this.usedId = usedId;
+        this.gameData = gameData;
         this.price = price;
         this.condition = condition;
     }
 
     /**
-     * @return the gameId
+     * @return the usedId
      */
-    public long getGameId() {
-        return gameId;
+    public long getUsedId() {
+        return usedId;
     }
 
     /**
-     * @param gameId the gameId to set
+     * @param usedId the usedId to set
      */
-    public void setGameId(long gameId) {
-        this.gameId = gameId;
+    public void setUsedId(long usedId) {
+        this.usedId = usedId;
+    }
+
+    /**
+     * @return the gameData
+     */
+    public GameData getGameData() {
+        return gameData;
+    }
+
+    /**
+     * @param gameData the gameData to set
+     */
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
     }
 
     /**
@@ -60,4 +76,6 @@ public class UsedGame {
     public void setCondition(String condition) {
         this.condition = condition;
     }
+    
+
 }

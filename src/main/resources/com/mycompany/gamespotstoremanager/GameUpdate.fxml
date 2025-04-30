@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.gamespotstoremanager.FXGameViewController">
+   <children>
+      <Text layoutX="256.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Game Info">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Text>
+      <VBox layoutX="16.0" layoutY="57.0" prefHeight="104.0" prefWidth="240.0">
+         <children>
+            <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="227.70935821533203">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TextField prefHeight="25.0" prefWidth="285.0" promptText="New Name" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Confirm New Name" />
+            <Text fx:id="ratingText" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="ratingText1" layoutX="10.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age Rating:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <MenuButton fx:id="ratingMenu" mnemonicParsing="false" text="New Rating">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Any" />
+                  <MenuItem mnemonicParsing="false" text="NR" />
+                  <MenuItem mnemonicParsing="false" text="E" />
+                  <MenuItem mnemonicParsing="false" text="E10+" />
+                  <MenuItem mnemonicParsing="false" text="T" />
+                  <MenuItem mnemonicParsing="false" text="M" />
+               </items>
+            </MenuButton>
+            <Text fx:id="ratingText12" layoutX="10.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="ratingText111" layoutX="10.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Copy Price:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TextField prefHeight="25.0" prefWidth="285.0" promptText="Change Price" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Confirm Change Price" />
+            <Text fx:id="ratingText112" layoutX="10.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="ratingText11" layoutX="10.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TextField prefHeight="25.0" prefWidth="285.0" promptText="Quantity Adjustment (+/-)" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Adjust Quantity" />
+         </children>
+      </VBox>
+      <TableView fx:id="usedGameViewTable" layoutX="436.0" layoutY="57.0" prefHeight="225.0" prefWidth="150.0">
+        <columns>
+          <TableColumn fx:id="usedConditionColumn" prefWidth="148.80001831054688" text="Publishers" />
+        </columns>
+      </TableView>
+      <Button layoutX="127.0" layoutY="486.0" mnemonicParsing="false" onAction="#returnPressed" prefHeight="25.0" prefWidth="99.0" text="Return" />
+      <Button layoutX="436.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Add New Publisher" />
+      <Button layoutX="16.0" layoutY="486.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
+      <TextField layoutX="436.0" layoutY="325.0" promptText="New Publisher" />
+      <Button layoutX="436.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
+      <TableView fx:id="usedGameViewTable1" layoutX="271.0" layoutY="57.0" prefHeight="225.0" prefWidth="150.0">
+         <columns>
+            <TableColumn fx:id="usedConditionColumn1" prefWidth="148.80001831054688" text="Genres" />
+         </columns>
+      </TableView>
+      <Button layoutX="271.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
+      <TextField layoutX="271.0" layoutY="325.0" promptText="New Genre" />
+      <Button layoutX="271.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Add New Genre" />
+      <TableView fx:id="usedGameViewTable2" layoutX="598.0" layoutY="58.0" prefHeight="225.0" prefWidth="188.0">
+         <columns>
+            <TableColumn fx:id="usedConditionColumn2" prefWidth="109.60003662109375" text="Condition" />
+            <TableColumn fx:id="usedPriceColumn" prefWidth="76.80001831054688" text="Price" />
+         </columns>
+      </TableView>
+      <Text layoutX="598.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Used Copies:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Button layoutX="598.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Remove Selected" />
+      <MenuButton fx:id="ratingMenu1" layoutX="598.0" layoutY="325.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Condition">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Any" />
+            <MenuItem mnemonicParsing="false" text="NR" />
+            <MenuItem mnemonicParsing="false" text="E" />
+            <MenuItem mnemonicParsing="false" text="E10+" />
+            <MenuItem mnemonicParsing="false" text="T" />
+            <MenuItem mnemonicParsing="false" text="M" />
+         </items>
+      </MenuButton>
+      <TextField layoutX="598.0" layoutY="361.0" prefHeight="25.0" prefWidth="188.0" promptText="Price" />
+      <Button layoutX="598.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Add Used Copy" />
+      <TextField layoutX="598.0" layoutY="397.0" prefHeight="25.0" prefWidth="188.0" promptText="# of identical Used Copies" />
+   </children>
+</AnchorPane>

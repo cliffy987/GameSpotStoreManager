@@ -1,11 +1,12 @@
 com\mycompany\gamespotstoremanager\FXController.class
+com\mycompany\gamespotstoremanager\GameData.class
 com\mycompany\gamespotstoremanager\Publisher.class
 com\mycompany\gamespotstoremanager\UsedGame.class
+com\mycompany\gamespotstoremanager\UsedGameDAO.class
 com\mycompany\gamespotstoremanager\MainApp.class
 com\mycompany\gamespotstoremanager\GameDAO.class
 com\mycompany\gamespotstoremanager\GenreDAO.class
 module-info.class
-com\mycompany\gamespotstoremanager\GameSearchData.class
 com\mycompany\gamespotstoremanager\Genre.class
 com\mycompany\gamespotstoremanager\PublisherDAO.class
 com\mycompany\gamespotstoremanager\FXGameViewController.class

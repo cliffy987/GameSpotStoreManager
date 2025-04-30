@@ -17,4 +17,5 @@ public abstract class FXController implements Initializable {
     private void switchToMainMenu() throws IOException {
         MainApp.setRoot("MainMenu");
     }
+
 }
