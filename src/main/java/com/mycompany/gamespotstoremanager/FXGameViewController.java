@@ -28,6 +28,8 @@ public class FXGameViewController extends FXController {
     public static HashMap<Long, Long> tempQuantity = new HashMap<>();
     public static HashMap<Long, ArrayList<UsedGame>> tempUsedGames = new HashMap<>(); //Left off here
     
+    ObservableList<UsedGame> observableUsedGames;
+    
     @FXML private Text nameText;
     @FXML private Text genreText;
     @FXML private Text publisherText;
@@ -53,6 +55,27 @@ public class FXGameViewController extends FXController {
     }
     
     @FXML
+    private void updatePressed() throws IOException {
+        if (FXCheckoutController.gamePurchases.size() == 0) {
+            FXGameUpdateController.setGameData(gameData);
+            FXGameUpdateController.setPurchaseData(newPurchase); //New-copy Quantity will be same as databse since cart is empty
+
+            //Create observable list for genres
+            ArrayList<Genre> genreList = GenreDAO.getAllGenresForGameId(gameData.getGameId());
+            ObservableList<Genre> genreObsList = FXCollections.observableArrayList(genreList);
+            FXGameUpdateController.setGameGenres(genreObsList);
+
+            MainApp.setRoot("GameUpdate");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Cart must be empty to update game data.");
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
     private void addNewToCart() {
         long quantity = tempQuantity.get(gameData.getGameId());
         if (quantity > 0) {
@@ -63,15 +86,28 @@ public class FXGameViewController extends FXController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Game is out of stock");
+            alert.setContentText("Game is out of stock.");
             alert.showAndWait();
         }
     }
     
     @FXML
     private void addUsedToCart() {
-        UsedGame usedGame = usedGameViewTable.getSelectionModel().getSelectedItem();
-        
+        if (usedGameViewTable.getSelectionModel().getSelectedItem() != null) {
+            UsedGame usedGame = usedGameViewTable.getSelectionModel().getSelectedItem();
+            GamePurchaseData usedGamePurchase = new GamePurchaseData(gameData, usedGame.getPrice(), -1, usedGame.getUsedId());
+            FXCheckoutController.gamePurchases.add(usedGamePurchase);
+            observableUsedGames.remove(usedGame);
+            
+            //Remove from this gameId's list of tempUsedGames
+            tempUsedGames.get(gameData.getGameId()).remove(usedGame);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please make a selection first.");
+            alert.showAndWait();
+        }
     }
     
     @Override
@@ -106,7 +142,7 @@ public class FXGameViewController extends FXController {
         }
         
         //Create setCellValueFactories and display the search results
-        ObservableList<UsedGame> observableUsedGames = FXCollections.observableArrayList(usedGames);
+        observableUsedGames = FXCollections.observableArrayList(usedGames);
 
         usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
         usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));

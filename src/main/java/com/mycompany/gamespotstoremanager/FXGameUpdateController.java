@@ -21,15 +21,15 @@ import javafx.scene.text.Text;
 
 public class FXGameUpdateController extends FXController {
 
-    private static Game game;
     private static GameData gameData;
     private static GamePurchaseData purchaseData;
     
-    private ArrayList<Genre> gameGenres;
-    private ArrayList<Publisher> gamePublishers;
+    private static ObservableList<Genre> gameGenres;
+    private static ObservableList<Publisher> gamePublishers;
+    private static ObservableList<UsedGame> usedCopies;
     
     @FXML private Text nameText;
-    @FXML private Text genreText;
+    @FXML private Text ratingText;
     @FXML private Text newPriceText;
     @FXML private Text newQuantityText;
     
@@ -60,6 +60,22 @@ public class FXGameUpdateController extends FXController {
         gameData = newData;
     }
     
+    public static void setPurchaseData(GamePurchaseData newData) {
+        purchaseData = newData;
+    }
+    
+    public static void setGameGenres(ObservableList<Genre> genreList) {
+        gameGenres = genreList;
+    }
+    
+    public static void setGamePublishers(ObservableList<Publisher> publisherList) {
+        gamePublishers = publisherList;
+    }
+    
+    public static void setUsedCopied(ObservableList<UsedGame> usedGamesList) {
+        usedCopies = usedGamesList;
+    }
+    
     @FXML
     private void addUsedEntry() throws IOException {
         MainApp.setRoot("GameSearch");
@@ -68,11 +84,11 @@ public class FXGameUpdateController extends FXController {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nameText.setText("Name: " + gameData.getGameName());
-        genreText.setText("Genre(s): " + gameData.getGameGenres());
-        newPriceText.setText("New Price: " + purchaseData.getGamePrice());
-        newQuantityText.setText("New Quantity: " + purchaseData.getGameQuantity());
+        ratingText.setText("Age Rating: " + gameData.getGameGenres());
+        newPriceText.setText("New-Copy Price: $" + purchaseData.getGamePrice());
+        newQuantityText.setText("New-Copy Quantity: " + purchaseData.getGameQuantity());
         
-        gameGenres = GenreDAO.getAllGenresForGameId(gameData.getGameId());
-        gamePublishers = PublisherDAO.getAllPublishersForGameId(gameData.getGameId());
+        genreNameColumn.setCellValueFactory(new PropertyValueFactory<Genre, String>("name"));
+        genreViewTable.setItems(gameGenres);
     }
 }

@@ -4,6 +4,7 @@ com\mycompany\gamespotstoremanager\Publisher.class
 com\mycompany\gamespotstoremanager\UsedGame.class
 com\mycompany\gamespotstoremanager\UsedGameDAO.class
 com\mycompany\gamespotstoremanager\MainApp.class
+com\mycompany\gamespotstoremanager\FXGameUpdateController.class
 com\mycompany\gamespotstoremanager\GameDAO.class
 com\mycompany\gamespotstoremanager\GenreDAO.class
 module-info.class
