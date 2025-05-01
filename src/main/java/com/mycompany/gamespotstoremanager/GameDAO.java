@@ -118,6 +118,21 @@ public class GameDAO {
         
     }
     
+    public static void updateGameName(long gameId, String newName) {
+        String sql = "UPDATE games SET game_name = \'" + newName + "\' WHERE game_id = " + gameId; 
+        DatabaseConnector.runOnDatabase(sql);
+    }
+    
+    public static void updateGameESRB(long gameId, int esrbId) {
+        String sql = "UPDATE games SET esrb_id = " + esrbId + " WHERE game_id = " + gameId; 
+        DatabaseConnector.runOnDatabase(sql);
+    }
+    
+    public static void updateGamePrice(long gameId, double newPrice) {
+        String sql = "UPDATE fixed_price_stock SET price = "+ newPrice +" WHERE game_id = "+ gameId;
+        DatabaseConnector.runOnDatabase(sql);
+    }
+    
     private static void setupIdEsrb() {
         if (IdEsrb != null)
             return;

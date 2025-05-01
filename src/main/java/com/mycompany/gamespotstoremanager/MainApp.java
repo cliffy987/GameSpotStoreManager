@@ -39,26 +39,7 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        testCreateAndAddGame();
         launch();
     }
-    
-    //////////////////////////////
-    //Test
-    //////////////////////////////
-    
-    public static void testCreateAndAddGame() {
-        ArrayList genreList = new ArrayList<Genre>();
-        ArrayList publisherList = new ArrayList<Publisher>();
-        genreList.add(GenreDAO.getGenreFromId(1)); //Action
-        genreList.add(GenreDAO.getGenreFromId(2)); //Adventure
-        publisherList.add(PublisherDAO.getPublisherFromId(1)); //NovaCore Games
-        publisherList.add(PublisherDAO.getPublisherFromId(2)); //IronPixel Studios
-        
-        Date date = java.sql.Date.valueOf("1971-12-10");
-        Game game = new Game("Super Chicken Adventure", date, 2, genreList, publisherList);
-        
-        GameDAO.addGameToDatabase(game);
-        System.out.println("Game Id: " + game.getGameId());
-    }
+
 }

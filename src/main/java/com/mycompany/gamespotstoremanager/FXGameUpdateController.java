@@ -32,10 +32,14 @@ public class FXGameUpdateController extends FXController{
     @FXML private Text ratingText;
     @FXML private Text newPriceText;
     @FXML private Text newQuantityText;
+    @FXML private TextField newNameField;
+    @FXML private TextField newPriceField;
+    @FXML private TextField newQuantityField;
     @FXML private TextField newGenreField;
     @FXML private TextField newPublisherField;
     @FXML private TextField usedPriceField;
     @FXML private TextField usedQuantityField;
+    @FXML private MenuButton ratingMenu;
     @FXML private MenuButton conditionMenu;
     int conditionId = -1;
     
@@ -180,6 +184,40 @@ public class FXGameUpdateController extends FXController{
     }
     
     @FXML
+    private void removeUsedPressed() throws IOException {
+        UsedGame copy = usedGameViewTable.getSelectionModel().getSelectedItem();
+        long usedId = copy.getUsedId();
+        UsedGameDAO.removeUsedGame(usedId);
+        usedCopies.remove(copy);
+    }
+    
+    @FXML
+    private void updateNamePressed() throws IOException {
+        String newName = newNameField.getText();
+        GameDAO.updateGameName(gameData.getGameId(), newName);
+        gameData.setGameName(newName);
+        nameText.setText("Name: " + newName);
+    }
+    
+    @FXML
+    private void updatePricePressed() throws IOException {
+        double price = 0;
+        try {
+            price = Double.parseDouble(newPriceField.getText());
+            if (price <= 0)
+                throw new NumberFormatException();
+                
+        } catch (Exception e) {
+            standardError("Price must be a number greater than 0.");
+            return;
+        }
+        
+        GameDAO.updateGamePrice(gameData.getGameId(), price);
+        gameData.set //Left off here; set price object's price
+        nameText.setText("Name: " + newName);
+    }
+    
+    @FXML
     private void returnPressed() throws IOException {
         MainApp.setRoot("GameView");
     }
@@ -200,6 +238,25 @@ public class FXGameUpdateController extends FXController{
         usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
         usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));
         usedGameViewTable.setItems(usedCopies);
+        
+        //Setup esrb
+        for (MenuItem menuItem : ratingMenu.getItems()) {
+            menuItem.setOnAction(e -> {
+                String newRating = menuItem.getText();
+                ratingText.setText("Age Rating: " + newRating); 
+                gameData.setGameRating(newRating);
+                if (newRating.equals("NR"))
+                    GameDAO.updateGameESRB(gameData.getGameId(), 1);
+                else if (newRating.equals("E"))
+                    GameDAO.updateGameESRB(gameData.getGameId(), 2);
+                else if (newRating.equals("E10+"))
+                    GameDAO.updateGameESRB(gameData.getGameId(), 3);
+                else if (newRating.equals("T"))
+                    GameDAO.updateGameESRB(gameData.getGameId(), 4);
+                else if (newRating.equals("M"))
+                    GameDAO.updateGameESRB(gameData.getGameId(), 5);
+            });
+        }
         
         //Setup condition menu
         for (MenuItem menuItem : conditionMenu.getItems()) {
