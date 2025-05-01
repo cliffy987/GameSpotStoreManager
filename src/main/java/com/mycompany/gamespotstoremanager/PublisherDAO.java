@@ -15,15 +15,17 @@ import java.util.HashMap;
 public class PublisherDAO {
     
     private static ArrayList<Publisher> allPublishersList;
-    private static HashMap<Long, Publisher> IdPublishers;
+    private static HashMap<Long, Publisher> publisherFromId;
+    private static HashMap<String, Long> idFromPublisher;
     
     public static void setupIdPublishers() {
         //Already setup
-        if (IdPublishers != null)
+        if (publisherFromId != null)
             return;
         
         allPublishersList = new ArrayList<Publisher>();
-        IdPublishers = new HashMap<Long, Publisher>();
+        publisherFromId = new HashMap<Long, Publisher>();
+        idFromPublisher = new HashMap<String, Long>();
         //Create IdPublisher list
         try {
             Connection connection = DatabaseConnector.getConnection();
@@ -37,13 +39,24 @@ public class PublisherDAO {
                 String publisherName = resultSet.getString("publisher_name");
                 Publisher publisher = new Publisher(publisherId, publisherName);
                 allPublishersList.add(publisher);
-                IdPublishers.put(publisherId, publisher);
+                publisherFromId.put(publisherId, publisher);
+                idFromPublisher.put(publisherName, publisherId);
             }
             
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
+    }
+    
+    public static void addPublisherToGame(long gameId, long publisherId) {
+        String sql = "INSERT INTO game_publishers (game_id, publisher_id) VALUES (" + gameId + "," + publisherId + ")"; 
+        DatabaseConnector.insertGetId(sql);
+    }
+    
+    public static void removePublisherFromGame(long gameId, long publisherId) {
+        String sql = "DELETE FROM game_publishers WHERE game_id = " + gameId + " AND publisher_id = " + publisherId; 
+        DatabaseConnector.runOnDatabase(sql);
     }
     
     public static ArrayList<Publisher> getAllPublishers() {
@@ -53,7 +66,17 @@ public class PublisherDAO {
     
     public static Publisher getPublisherFromId(long publisherId) {
         setupIdPublishers();
-        return IdPublishers.get(publisherId);
+        return publisherFromId.get(publisherId);
+    }
+    
+    public static long getIdFromPublisher(String publisherName) {
+        setupIdPublishers();
+        return idFromPublisher.get(publisherName);
+    }
+    
+    public static boolean publisherNameExists(String publisherName) {
+        setupIdPublishers();
+        return idFromPublisher.containsKey(publisherName);
     }
     
     public static ArrayList<Publisher> getAllPublishersForGameId(long gameId) {
@@ -71,7 +94,7 @@ public class PublisherDAO {
             //Get prevously-created object based on id
             while (resultSet.next()) {
                 long publisherId = resultSet.getInt("publisher_id");
-                gamePublishers.add(IdPublishers.get(publisherId));
+                gamePublishers.add(publisherFromId.get(publisherId));
             }
             
             return gamePublishers;

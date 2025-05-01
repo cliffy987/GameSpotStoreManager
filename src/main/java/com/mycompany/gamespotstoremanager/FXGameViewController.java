@@ -64,7 +64,11 @@ public class FXGameViewController extends FXController {
             //Create observable list for genres
             ArrayList<Genre> genreList = GenreDAO.getAllGenresForGameId(gameData.getGameId());
             ObservableList<Genre> genreObsList = FXCollections.observableArrayList(genreList);
+            ArrayList<Publisher> publisherList = PublisherDAO.getAllPublishersForGameId(gameData.getGameId());
+            ObservableList<Publisher> publisherObsList = FXCollections.observableArrayList(publisherList);
+            
             FXGameUpdateController.setGameGenres(genreObsList);
+            FXGameUpdateController.setGamePublishers(publisherObsList);
 
             MainApp.setRoot("GameUpdate");
         } else {
@@ -99,9 +103,6 @@ public class FXGameViewController extends FXController {
             GamePurchaseData usedGamePurchase = new GamePurchaseData(gameData, usedGame.getPrice(), -1, usedGame.getUsedId());
             FXCheckoutController.gamePurchases.add(usedGamePurchase);
             observableUsedGames.remove(usedGame);
-            
-            //Remove from this gameId's list of tempUsedGames
-            tempUsedGames.get(gameData.getGameId()).remove(usedGame);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -127,25 +128,16 @@ public class FXGameViewController extends FXController {
         newPriceText.setText("New Price: " + newPurchase.getGamePrice());
         newQuantityText.setText("New Quantity: " + tempQuantity.get(gameData.getGameId()));
         
-        //Left off here, need to make sure the array list we're editing is the same one stored
-        //In the hash map so that it updates properly when changing scenes.
-        observableUsedGames =
         
         if (tempUsedGames.containsKey(gameData.getGameId()) == false) {
             //Get array of usedGames for this gameId
-            usedGames = UsedGameDAO.getUsedGamesFromGameData(gameData);
-        
-            for (UsedGame usedGame : usedGames) {
-                tempUsedGames.put(gameData.getGameId(), usedGames);
-            }
+            observableUsedGames = FXCollections.observableArrayList(UsedGameDAO.getUsedGamesFromGameData(gameData));
+            tempUsedGames.put(gameData.getGameId(), observableUsedGames);
         }
         else {
             //Retreive list of used games for this gameId  
-            usedGames = tempUsedGames.get(gameData.getGameId());
+            observableUsedGames = tempUsedGames.get(gameData.getGameId());
         }
-        
-        //Create setCellValueFactories and display the search results
-        observableUsedGames = FXCollections.observableArrayList(usedGames);
 
         usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
         usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));

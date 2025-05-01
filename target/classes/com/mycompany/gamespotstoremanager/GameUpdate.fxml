@@ -11,22 +11,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.gamespotstoremanager.FXGameUpdateController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.gamespotstoremanager.FXGameUpdateController">
    <children>
       <Text layoutX="256.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Game Info">
          <font>
             <Font name="System Bold" size="32.0" />
          </font>
       </Text>
-      <VBox layoutX="16.0" layoutY="57.0" prefHeight="104.0" prefWidth="240.0">
+      <VBox layoutX="16.0" layoutY="57.0" prefHeight="328.0" prefWidth="240.0">
          <children>
             <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="227.70935821533203">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField prefHeight="25.0" prefWidth="285.0" promptText="New Name" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Confirm New Name" />
+            <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="240.0" promptText="New Name" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="240.0" text="Confirm New Name" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font size="16.0" />
@@ -57,7 +57,7 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField prefHeight="25.0" prefWidth="285.0" promptText="Change Price" />
+            <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="240.0" promptText="Change Price" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Confirm Change Price" />
             <Text layoutX="10.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
@@ -69,7 +69,7 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField prefHeight="25.0" prefWidth="285.0" promptText="Quantity Adjustment (+/-)" />
+            <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="240.0" promptText="Quantity Adjustment (+/-)" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Adjust Quantity" />
          </children>
       </VBox>
@@ -78,17 +78,17 @@
           <TableColumn fx:id="publisherNameColumn" prefWidth="148.80001831054688" text="Publishers" />
         </columns>
       </TableView>
-      <Button layoutX="127.0" layoutY="486.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Return" />
-      <Button layoutX="436.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Add New Publisher" />
+      <Button layoutX="127.0" layoutY="486.0" mnemonicParsing="false" onAction="#returnPressed" prefHeight="25.0" prefWidth="99.0" text="Return" />
+      <Button layoutX="436.0" layoutY="361.0" mnemonicParsing="false" onAction="#addPublisherPressed" prefHeight="25.0" prefWidth="149.0" text="Add New Publisher" />
       <Button layoutX="16.0" layoutY="486.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
       <TextField fx:id="newPublisherField" layoutX="436.0" layoutY="325.0" promptText="New Publisher" />
-      <Button layoutX="436.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
+      <Button layoutX="436.0" layoutY="289.0" mnemonicParsing="false" onAction="#removePublisherPressed" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
       <TableView fx:id="genreViewTable" layoutX="271.0" layoutY="57.0" prefHeight="225.0" prefWidth="150.0">
          <columns>
             <TableColumn fx:id="genreNameColumn" prefWidth="148.80001831054688" text="Genres" />
          </columns>
       </TableView>
-      <Button layoutX="271.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
+      <Button layoutX="271.0" layoutY="289.0" mnemonicParsing="false" onAction="#removeGenrePressed" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
       <TextField fx:id="newGenreField" layoutX="271.0" layoutY="325.0" promptText="New Genre" />
       <Button layoutX="271.0" layoutY="361.0" mnemonicParsing="false" onAction="#addGenrePressed" prefHeight="25.0" prefWidth="149.0" text="Add New Genre" />
       <TableView fx:id="usedGameViewTable" layoutX="598.0" layoutY="58.0" prefHeight="225.0" prefWidth="188.0">

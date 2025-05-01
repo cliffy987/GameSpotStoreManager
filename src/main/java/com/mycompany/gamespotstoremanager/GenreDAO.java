@@ -81,6 +81,11 @@ public class GenreDAO {
         DatabaseConnector.insertGetId(sql);
     }
     
+    public static void removeGenreFromGame(long gameId, long genreId) {
+        String sql = "DELETE FROM game_genres WHERE game_id = " + gameId + " AND genre_id = " + genreId; 
+        DatabaseConnector.runOnDatabase(sql);
+    }
+    
     public static ArrayList<Genre> getAllGenres() {
         setupIdGenreMaps();
         return allGenresList;
@@ -97,6 +102,7 @@ public class GenreDAO {
     }
     
     public static boolean genreNameExists(String genreName) {
+        setupIdGenreMaps();
         return idFromGenre.containsKey(genreName);
     }
     

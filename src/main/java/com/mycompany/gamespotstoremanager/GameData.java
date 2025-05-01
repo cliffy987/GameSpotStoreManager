@@ -65,6 +65,7 @@ public class GameData {
         this.gamePublishers = gamePublishers;
     }
 
+
     /**
      * @return the gameRating
      */
@@ -92,4 +93,5 @@ public class GameData {
     public void setGameId(long gameId) {
         this.gameId = gameId;
     }
+    
 }

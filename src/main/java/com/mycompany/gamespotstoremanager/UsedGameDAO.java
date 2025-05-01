@@ -43,6 +43,11 @@ public class UsedGameDAO {
         
     }
     
+    public static void removeUsedGame(long usedId) {
+        String sql = "DELETE FROM used_game_stock WHERE used_id = " + usedId; 
+        DatabaseConnector.runOnDatabase(sql);
+    }
+    
     public static String getConditionFromId(Integer conditionId) {
         setupIdCondition();
         return idCondition.get(conditionId);

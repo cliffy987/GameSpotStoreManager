@@ -35,6 +35,8 @@ public class FXGameSearchController extends FXController {
     private String publisherEntered = "";
     private int esrbId = -1;
     
+    private static ObservableList<GameData> observableGames;
+    
     
     
     @FXML
@@ -63,15 +65,18 @@ public class FXGameSearchController extends FXController {
         ArrayList<GameData> gameSearchList = GameDAO.searchGames(nameEntered, genreEntered, publisherEntered, esrbId);
         
         //Create setCellValueFactories and display the search results
-        ObservableList<GameData> observableGames = FXCollections.observableArrayList(gameSearchList);
+        observableGames = FXCollections.observableArrayList(gameSearchList);
 
+        displaySearch();
+    }
+    
+    private void displaySearch() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gameName"));
         genresColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gameGenres"));
         publishersColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gamePublishers"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<GameData, String>("gameRating"));
 
         gameViewTable.setItems(observableGames);
-        
     }
     
     @FXML
@@ -102,6 +107,9 @@ public class FXGameSearchController extends FXController {
                     esrbId = 5;
                 System.out.println(esrbId);
             });
+        }
+        if (observableGames != null) {
+            displaySearch();
         }
     }
 }

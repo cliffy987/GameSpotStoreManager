@@ -28,9 +28,6 @@ public class FXGameUpdateController extends FXController{
     private static ObservableList<Publisher> gamePublishers;
     private static ObservableList<UsedGame> usedCopies;
     
-    private ArrayList<Genre> allGenres;
-    private ArrayList<Publisher> allPublishers;
-    
     @FXML private Text nameText;
     @FXML private Text ratingText;
     @FXML private Text newPriceText;
@@ -45,25 +42,12 @@ public class FXGameUpdateController extends FXController{
     @FXML private TableView<Genre> genreViewTable;
     @FXML private TableColumn<Genre, String> genreNameColumn;
     
+    @FXML private TableView<Publisher> publisherViewTable;
+    @FXML private TableColumn<Publisher, String> publisherNameColumn;
+    
     @FXML private TableView<UsedGame> usedGameViewTable;
     @FXML private TableColumn<UsedGame, Double> usedPriceColumn;
     @FXML private TableColumn<UsedGame, String> usedConditionColumn;
-    
-    @FXML private TableView<Genre> publisherViewTable;
-    @FXML private TableColumn<Publisher, String> publisherNameColumn;
-
-    //RULE: YOU CANNOT ACCESS THIS MENU IF THERE ARE ITEMS IN THE CART
-    
-    //Updating name; if there's an SQL exception, that means the name is the
-    //same as another game.
-    //Updating publisher; select from a list to remove, or input name of
-    //publisher to add. Come up with an error if the publisher name does not
-    //exist.
-    //Updating genre; same as publisher
-    //Updating rating; select from dropdown
-    
-    //Name and ESRB will be changed with a confirm button next to each of them,
-    //Genre and Publisher changes happen immeditately.
     
     public static GameData getGameData() {
         return gameData;
@@ -113,6 +97,34 @@ public class FXGameUpdateController extends FXController{
         GenreDAO.addGenreToGame(gameData.getGameId(), genreId);
         Genre genre = GenreDAO.getGenreFromId(genreId);
         gameGenres.add(genre);
+        gameData.setGameGenres(GenreDAO.getGenresStringForGameId(gameData.getGameId()));
+    }
+    
+    @FXML
+    private void addPublisherPressed() {
+        String publisherName = newPublisherField.getText();
+        
+        //Return if no match
+        if (PublisherDAO.publisherNameExists(publisherName) == false) {
+            standardError("Publisher does not exist.");
+            return;
+        }
+        
+        long publisherId = PublisherDAO.getIdFromPublisher(publisherName);
+        
+        //Return if already added
+        for (Publisher publisher : gamePublishers) {
+            if (publisher.getName().equals(publisherName)) {
+                standardError("Publisher already added to this game.");
+                return;
+            }
+        }
+        
+        //Add to database
+        PublisherDAO.addPublisherToGame(gameData.getGameId(), publisherId);
+        Publisher publisher = PublisherDAO.getPublisherFromId(publisherId);
+        gamePublishers.add(publisher);
+        gameData.setGamePublishers(PublisherDAO.getPublishersStringForGameId(gameData.getGameId()));
     }
     
     @FXML
@@ -150,6 +162,24 @@ public class FXGameUpdateController extends FXController{
     }
     
     @FXML
+    private void removeGenrePressed() throws IOException {
+        Genre genre = genreViewTable.getSelectionModel().getSelectedItem();
+        long genreId = genre.getGenreId();
+        GenreDAO.removeGenreFromGame(gameData.getGameId(), genreId);
+        gameGenres.remove(genre);
+        gameData.setGameGenres(GenreDAO.getGenresStringForGameId(gameData.getGameId()));
+    }
+    
+    @FXML
+    private void removePublisherPressed() throws IOException {
+        Publisher publisher = publisherViewTable.getSelectionModel().getSelectedItem();
+        long publisherId = publisher.getPublisherId();
+        PublisherDAO.removePublisherFromGame(gameData.getGameId(), publisherId);
+        gamePublishers.remove(publisher);
+        gameData.setGamePublishers(PublisherDAO.getPublishersStringForGameId(gameData.getGameId()));
+    }
+    
+    @FXML
     private void returnPressed() throws IOException {
         MainApp.setRoot("GameView");
     }
@@ -157,15 +187,15 @@ public class FXGameUpdateController extends FXController{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nameText.setText("Name: " + gameData.getGameName());
-        ratingText.setText("Age Rating: " + gameData.getGameGenres());
+        ratingText.setText("Age Rating: " + gameData.getGameRating());
         newPriceText.setText("New-Copy Price: $" + purchaseData.getGamePrice());
         newQuantityText.setText("New-Copy Quantity: " + purchaseData.getGameQuantity());
         
-        allGenres = GenreDAO.getAllGenres();
-        allPublishers = PublisherDAO.getAllPublishers();
-        
         genreNameColumn.setCellValueFactory(new PropertyValueFactory<Genre, String>("name"));
         genreViewTable.setItems(gameGenres);
+        
+        publisherNameColumn.setCellValueFactory(new PropertyValueFactory<Publisher, String>("name"));
+        publisherViewTable.setItems(gamePublishers);
         
         usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
         usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));
