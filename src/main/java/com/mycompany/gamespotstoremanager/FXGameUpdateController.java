@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-public class FXGameUpdateController extends FXController {
+public class FXGameUpdateController extends FXController{
 
     private static GameData gameData;
     private static GamePurchaseData purchaseData;
@@ -28,13 +28,26 @@ public class FXGameUpdateController extends FXController {
     private static ObservableList<Publisher> gamePublishers;
     private static ObservableList<UsedGame> usedCopies;
     
+    private ArrayList<Genre> allGenres;
+    private ArrayList<Publisher> allPublishers;
+    
     @FXML private Text nameText;
     @FXML private Text ratingText;
     @FXML private Text newPriceText;
     @FXML private Text newQuantityText;
+    @FXML private TextField newGenreField;
+    @FXML private TextField newPublisherField;
+    @FXML private TextField usedPriceField;
+    @FXML private TextField usedQuantityField;
+    @FXML private MenuButton conditionMenu;
+    int conditionId = -1;
     
     @FXML private TableView<Genre> genreViewTable;
     @FXML private TableColumn<Genre, String> genreNameColumn;
+    
+    @FXML private TableView<UsedGame> usedGameViewTable;
+    @FXML private TableColumn<UsedGame, Double> usedPriceColumn;
+    @FXML private TableColumn<UsedGame, String> usedConditionColumn;
     
     @FXML private TableView<Genre> publisherViewTable;
     @FXML private TableColumn<Publisher, String> publisherNameColumn;
@@ -77,8 +90,68 @@ public class FXGameUpdateController extends FXController {
     }
     
     @FXML
-    private void addUsedEntry() throws IOException {
-        MainApp.setRoot("GameSearch");
+    private void addGenrePressed() {
+        String genreName = newGenreField.getText();
+        
+        //Return if no match
+        if (GenreDAO.genreNameExists(genreName) == false) {
+            standardError("Genre does not exist.");
+            return;
+        }
+        
+        long genreId = GenreDAO.getIdFromGenre(genreName);
+        
+        //Return if already added
+        for (Genre genre : gameGenres) {
+            if (genre.getName().equals(genreName)) {
+                standardError("Genre already added to this game.");
+                return;
+            }
+        }
+        
+        //Add to database
+        GenreDAO.addGenreToGame(gameData.getGameId(), genreId);
+        Genre genre = GenreDAO.getGenreFromId(genreId);
+        gameGenres.add(genre);
+    }
+    
+    @FXML
+    private void addUsedPressed() {
+        int quantity = 0;
+        double price = 0;
+        
+        //Make sure condition has been selected
+        if (conditionId == -1) {
+            standardError("Please select a condition.");
+            return;
+        }
+        
+        //Make sure numbers are valid
+        try {
+            price = Double.parseDouble(usedPriceField.getText());
+            quantity = Integer.parseInt(usedQuantityField.getText());
+            if (price <= 0 || quantity <= 0)
+                throw new NumberFormatException();
+                
+        } catch (Exception e) {
+            standardError("Price and Number of Copies must both be numbers greater than 0.");
+            return;
+        }
+
+        //Insert 
+        for (int i = 0; i < quantity; i++) {
+            String sql = "INSERT INTO used_game_stock (game_id, price, game_condition_id) VALUES " +
+                    "(" + gameData.getGameId() + "," + price + "," + conditionId + ")";
+            long usedId = DatabaseConnector.insertGetId(sql);
+            System.out.println(usedId);
+            UsedGame usedGame = new UsedGame(usedId, gameData, price, conditionMenu.getText());
+            usedCopies.add(usedGame);
+        }
+    }
+    
+    @FXML
+    private void returnPressed() throws IOException {
+        MainApp.setRoot("GameView");
     }
     
     @Override
@@ -88,7 +161,38 @@ public class FXGameUpdateController extends FXController {
         newPriceText.setText("New-Copy Price: $" + purchaseData.getGamePrice());
         newQuantityText.setText("New-Copy Quantity: " + purchaseData.getGameQuantity());
         
+        allGenres = GenreDAO.getAllGenres();
+        allPublishers = PublisherDAO.getAllPublishers();
+        
         genreNameColumn.setCellValueFactory(new PropertyValueFactory<Genre, String>("name"));
         genreViewTable.setItems(gameGenres);
+        
+        usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
+        usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));
+        usedGameViewTable.setItems(usedCopies);
+        
+        //Setup condition menu
+        for (MenuItem menuItem : conditionMenu.getItems()) {
+            menuItem.setOnAction(e -> {
+                String condition = menuItem.getText();
+                conditionMenu.setText(condition);
+                if (conditionMenu.getText().equals("VERY POOR"))
+                    conditionId = 1;
+                else if (conditionMenu.getText().equals("POOR"))
+                    conditionId = 2;
+                else if (conditionMenu.getText().equals("OKAY"))
+                    conditionId = 3;
+                else if (conditionMenu.getText().equals("GOOD"))
+                    conditionId = 4;
+                else if (conditionMenu.getText().equals("GREAT"))
+                    conditionId = 5;
+                else if (conditionMenu.getText().equals("EXCELLENT"))
+                    conditionId = 6;
+                else
+                    conditionId = -1;
+                System.out.println(conditionId);
+            });
+        }
+        
     }
 }

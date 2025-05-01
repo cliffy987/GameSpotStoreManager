@@ -7,6 +7,7 @@ package com.mycompany.gamespotstoremanager;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -16,6 +17,15 @@ public abstract class FXController implements Initializable {
     @FXML
     private void switchToMainMenu() throws IOException {
         MainApp.setRoot("MainMenu");
+    }
+    
+    @FXML
+    public void standardError(String errorText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(errorText);
+        alert.showAndWait();
     }
 
 }

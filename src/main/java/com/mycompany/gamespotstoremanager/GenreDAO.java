@@ -15,15 +15,17 @@ import java.util.HashMap;
 
 public class GenreDAO {
     private static ArrayList<Genre> allGenresList;
-    private static HashMap<Long, Genre> IdGenres;
+    private static HashMap<Long, Genre> genreFromId;
+    private static HashMap<String, Long> idFromGenre;
     
-    public static void setupIdGenres() {
+    public static void setupIdGenreMaps() {
         //Already setup
-        if (IdGenres != null)
+        if (genreFromId != null)
             return;
         
         allGenresList = new ArrayList<Genre>();
-        IdGenres = new HashMap<Long, Genre>();
+        genreFromId = new HashMap<>();
+        idFromGenre = new HashMap<>();
         //Create IdGenre list
         try (Connection connection = DatabaseConnector.getConnection()) {
 
@@ -36,7 +38,8 @@ public class GenreDAO {
                 String genreName = resultSet.getString("genre_name");
                 Genre genre = new Genre(genreId, genreName);
                 allGenresList.add(genre);
-                IdGenres.put(genreId, genre);
+                genreFromId.put(genreId, genre);
+                idFromGenre.put(genre.getName(), genreId);
             }
             
         } catch (SQLException e) {
@@ -45,18 +48,60 @@ public class GenreDAO {
         
     }
     
+    public static void setupIdGenres() {
+        //Already setup
+        if (genreFromId != null)
+            return;
+        
+        allGenresList = new ArrayList<Genre>();
+        genreFromId = new HashMap<Long, Genre>();
+        //Create IdGenre list
+        try (Connection connection = DatabaseConnector.getConnection()) {
+
+            String sql = "SELECT * FROM genres";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            
+            while (resultSet.next()) {
+                long genreId = resultSet.getInt("genre_id");
+                String genreName = resultSet.getString("genre_name");
+                Genre genre = new Genre(genreId, genreName);
+                allGenresList.add(genre);
+                genreFromId.put(genreId, genre);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public static void addGenreToGame(long gameId, long genreId) {
+        String sql = "INSERT INTO game_genres (game_id, genre_id) VALUES (" + gameId + "," + genreId + ")"; 
+        DatabaseConnector.insertGetId(sql);
+    }
+    
     public static ArrayList<Genre> getAllGenres() {
-        setupIdGenres();
+        setupIdGenreMaps();
         return allGenresList;
     }
     
     public static Genre getGenreFromId(long genreId) {
-        setupIdGenres();
-        return IdGenres.get(genreId);
+        setupIdGenreMaps();
+        return genreFromId.get(genreId);
+    }
+    
+    public static long getIdFromGenre(String genreName) {
+        setupIdGenreMaps();
+        return idFromGenre.get(genreName);
+    }
+    
+    public static boolean genreNameExists(String genreName) {
+        return idFromGenre.containsKey(genreName);
     }
     
     public static ArrayList<Genre> getAllGenresForGameId(long gameId) {
-        setupIdGenres();
+        setupIdGenreMaps();
         
         try (Connection connection = DatabaseConnector.getConnection()) {
 
@@ -69,7 +114,7 @@ public class GenreDAO {
             //Get prevously-created object based on id
             while (resultSet.next()) {
                 long genreId = resultSet.getInt("genre_id");
-                gameGenres.add(IdGenres.get(genreId));
+                gameGenres.add(genreFromId.get(genreId));
             }
             
             return gameGenres;

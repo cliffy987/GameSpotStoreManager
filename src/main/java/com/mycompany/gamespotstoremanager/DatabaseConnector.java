@@ -27,17 +27,13 @@ public class DatabaseConnector {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
     
-    public static ResultSet AAAAAt(String sql) {
+    public static void runOnDatabase(String sql) {
         try (Connection connection = DatabaseConnector.getConnection()) {
-            Statement gameStatement = connection.createStatement();
-            ResultSet resultSet = gameStatement.executeQuery(sql);
-            return resultSet;
-            
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        return null;
     }
     
     public static long insertGetId(String sql) {

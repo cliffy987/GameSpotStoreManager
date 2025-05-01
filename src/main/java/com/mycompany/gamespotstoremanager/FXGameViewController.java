@@ -26,7 +26,7 @@ public class FXGameViewController extends FXController {
     private GamePurchaseData newPurchase;
     
     public static HashMap<Long, Long> tempQuantity = new HashMap<>();
-    public static HashMap<Long, ArrayList<UsedGame>> tempUsedGames = new HashMap<>(); //Left off here
+    public static HashMap<Long, ObservableList<UsedGame>> tempUsedGames = new HashMap<>(); //Left off here
     
     ObservableList<UsedGame> observableUsedGames;
     
@@ -59,7 +59,8 @@ public class FXGameViewController extends FXController {
         if (FXCheckoutController.gamePurchases.size() == 0) {
             FXGameUpdateController.setGameData(gameData);
             FXGameUpdateController.setPurchaseData(newPurchase); //New-copy Quantity will be same as databse since cart is empty
-
+            FXGameUpdateController.setUsedCopied(observableUsedGames);
+            
             //Create observable list for genres
             ArrayList<Genre> genreList = GenreDAO.getAllGenresForGameId(gameData.getGameId());
             ObservableList<Genre> genreObsList = FXCollections.observableArrayList(genreList);
@@ -126,7 +127,9 @@ public class FXGameViewController extends FXController {
         newPriceText.setText("New Price: " + newPurchase.getGamePrice());
         newQuantityText.setText("New Quantity: " + tempQuantity.get(gameData.getGameId()));
         
-        ArrayList<UsedGame> usedGames;
+        //Left off here, need to make sure the array list we're editing is the same one stored
+        //In the hash map so that it updates properly when changing scenes.
+        observableUsedGames =
         
         if (tempUsedGames.containsKey(gameData.getGameId()) == false) {
             //Get array of usedGames for this gameId
@@ -146,7 +149,6 @@ public class FXGameViewController extends FXController {
 
         usedPriceColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, Double>("price"));
         usedConditionColumn.setCellValueFactory(new PropertyValueFactory<UsedGame, String>("condition"));
-
 
         usedGameViewTable.setItems(observableUsedGames);
     }

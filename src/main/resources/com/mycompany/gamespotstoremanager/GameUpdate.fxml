@@ -81,7 +81,7 @@
       <Button layoutX="127.0" layoutY="486.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Return" />
       <Button layoutX="436.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Add New Publisher" />
       <Button layoutX="16.0" layoutY="486.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
-      <TextField layoutX="436.0" layoutY="325.0" promptText="New Publisher" />
+      <TextField fx:id="newPublisherField" layoutX="436.0" layoutY="325.0" promptText="New Publisher" />
       <Button layoutX="436.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
       <TableView fx:id="genreViewTable" layoutX="271.0" layoutY="57.0" prefHeight="225.0" prefWidth="150.0">
          <columns>
@@ -89,11 +89,11 @@
          </columns>
       </TableView>
       <Button layoutX="271.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Remove Selected" />
-      <TextField layoutX="271.0" layoutY="325.0" promptText="New Genre" />
-      <Button layoutX="271.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Add New Genre" />
-      <TableView fx:id="usedGameViewTable2" layoutX="598.0" layoutY="58.0" prefHeight="225.0" prefWidth="188.0">
+      <TextField fx:id="newGenreField" layoutX="271.0" layoutY="325.0" promptText="New Genre" />
+      <Button layoutX="271.0" layoutY="361.0" mnemonicParsing="false" onAction="#addGenrePressed" prefHeight="25.0" prefWidth="149.0" text="Add New Genre" />
+      <TableView fx:id="usedGameViewTable" layoutX="598.0" layoutY="58.0" prefHeight="225.0" prefWidth="188.0">
          <columns>
-            <TableColumn fx:id="usedConditionColumn2" prefWidth="109.60003662109375" text="Condition" />
+            <TableColumn fx:id="usedConditionColumn" prefWidth="109.60003662109375" text="Condition" />
             <TableColumn fx:id="usedPriceColumn" prefWidth="76.80001831054688" text="Price" />
          </columns>
       </TableView>
@@ -103,18 +103,18 @@
          </font>
       </Text>
       <Button layoutX="598.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Remove Selected" />
-      <MenuButton fx:id="ratingMenu1" layoutX="598.0" layoutY="325.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Condition">
+      <MenuButton fx:id="conditionMenu" layoutX="598.0" layoutY="325.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Condition">
          <items>
-            <MenuItem mnemonicParsing="false" text="Any" />
-            <MenuItem mnemonicParsing="false" text="NR" />
-            <MenuItem mnemonicParsing="false" text="E" />
-            <MenuItem mnemonicParsing="false" text="E10+" />
-            <MenuItem mnemonicParsing="false" text="T" />
-            <MenuItem mnemonicParsing="false" text="M" />
+            <MenuItem mnemonicParsing="false" text="VERY POOR" />
+            <MenuItem mnemonicParsing="false" text="POOR" />
+            <MenuItem mnemonicParsing="false" text="OKAY" />
+            <MenuItem mnemonicParsing="false" text="GOOD" />
+            <MenuItem mnemonicParsing="false" text="GREAT" />
+            <MenuItem mnemonicParsing="false" text="EXCELLENT" />
          </items>
       </MenuButton>
-      <TextField layoutX="598.0" layoutY="361.0" prefHeight="25.0" prefWidth="188.0" promptText="Price" />
-      <Button layoutX="598.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="188.0" text="Add Used Copy" />
-      <TextField layoutX="598.0" layoutY="397.0" prefHeight="25.0" prefWidth="188.0" promptText="# of identical Used Copies" />
+      <TextField fx:id="usedPriceField" layoutX="598.0" layoutY="361.0" prefHeight="25.0" prefWidth="188.0" promptText="Price" />
+      <Button layoutX="598.0" layoutY="432.0" mnemonicParsing="false" onAction="#addUsedPressed" prefHeight="25.0" prefWidth="188.0" text="Add Used Copy" />
+      <TextField fx:id="usedQuantityField" layoutX="598.0" layoutY="397.0" prefHeight="25.0" prefWidth="188.0" promptText="# of identical Used Copies" />
    </children>
 </AnchorPane>
