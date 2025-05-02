@@ -13,5 +13,6 @@
          </font>
       </Text>
       <Button layoutX="254.0" layoutY="73.0" mnemonicParsing="false" onAction="#switchToGameSearch" text="Search Games" />
+      <Button layoutX="264.0" layoutY="105.0" mnemonicParsing="false" onAction="#switchToGameAdd" text="Add Game" />
    </children>
 </AnchorPane>

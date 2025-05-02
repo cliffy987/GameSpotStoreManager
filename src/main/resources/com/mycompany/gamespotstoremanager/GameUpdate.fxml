@@ -51,25 +51,25 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text fx:id="newPriceText" layoutX="10.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Copy Price:">
+            <Text fx:id="newPriceText" layoutX="10.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New-Copy Price:">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
             <TextField fx:id="newPriceField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="240.0" promptText="Change Price" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Confirm Change Price" />
+            <Button mnemonicParsing="false" onAction="#updatePricePressed" prefHeight="25.0" prefWidth="243.0" text="Confirm Change Price" />
             <Text layoutX="10.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text fx:id="newQuantityText" layoutX="10.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
+            <Text fx:id="newQuantityText" layoutX="10.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New-Copy Quantity:">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
             <TextField fx:id="newQuantityField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="240.0" promptText="Quantity Adjustment (+/-)" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" text="Adjust Quantity" />
+            <Button mnemonicParsing="false" onAction="#updateQuantityPressed" prefHeight="25.0" prefWidth="243.0" text="Adjust Quantity" />
          </children>
       </VBox>
       <TableView fx:id="publisherViewTable" layoutX="436.0" layoutY="57.0" prefHeight="225.0" prefWidth="150.0">

@@ -194,6 +194,13 @@ public class FXGameUpdateController extends FXController{
     @FXML
     private void updateNamePressed() throws IOException {
         String newName = newNameField.getText();
+        
+        //Don't want blank names
+        if (newName.isBlank()) {
+            standardError("Please enter a valid name.");
+            return;
+        }
+        
         GameDAO.updateGameName(gameData.getGameId(), newName);
         gameData.setGameName(newName);
         nameText.setText("Name: " + newName);
@@ -213,8 +220,25 @@ public class FXGameUpdateController extends FXController{
         }
         
         GameDAO.updateGamePrice(gameData.getGameId(), price);
-        gameData.set //Left off here; set price object's price
-        nameText.setText("Name: " + newName);
+        purchaseData.setGamePrice(price);
+        newPriceText.setText("New-Copy Price: $" + price);
+    }
+    
+    @FXML
+    private void updateQuantityPressed() throws IOException {
+        long addQuantity = 0;
+        try {
+            addQuantity = Long.parseLong(newQuantityField.getText());
+                
+        } catch (Exception e) {
+            standardError("Quantity must be an integer value.");
+            return;
+        }
+        
+        long newQuantity = GameDAO.adjustNewQuantity(gameData.getGameId(), addQuantity);
+        purchaseData.setGameQuantity(newQuantity);
+        FXGameViewController.updateTempQuantity(gameData.getGameId(), newQuantity);
+        newQuantityText.setText("New-Copy Quantity: " + newQuantity);
     }
     
     @FXML

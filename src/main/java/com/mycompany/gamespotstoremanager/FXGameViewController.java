@@ -49,6 +49,10 @@ public class FXGameViewController extends FXController {
         gameData = newData;
     }
     
+    public static void updateTempQuantity(long gameId, long newQuantity) {
+        tempQuantity.put(gameId, newQuantity);
+    }
+    
     @FXML
     private void returnPressed() throws IOException {
         MainApp.setRoot("GameSearch");
