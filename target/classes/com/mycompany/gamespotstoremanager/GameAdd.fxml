@@ -78,7 +78,7 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <DatePicker />
+            <DatePicker fx:id="releaseDatePicker" />
          </children>
       </VBox>
       <TableView fx:id="publisherViewTable" layoutX="436.0" layoutY="57.0" prefHeight="225.0" prefWidth="150.0">

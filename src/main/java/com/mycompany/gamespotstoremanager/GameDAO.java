@@ -60,7 +60,7 @@ public class GameDAO {
         return gamesList;
     }
     
-    public static void addGameToDatabase(Game game) {
+    public static void addGameToDatabase(Game game, double newPrice, long newQuantity) {
         try (Connection connection = DatabaseConnector.getConnection()) {
 
             //The actual Game entry
@@ -81,6 +81,12 @@ public class GameDAO {
             gameIdResultSet.next();
             long gameId = gameIdResultSet.getLong("game_id");
             game.setGameId(gameId);
+            
+            //Fixed price stock connection
+            String priceSql = "INSERT INTO fixed_price_stock (game_id,price,quantity) VALUES("+gameId+","+newPrice+","+newQuantity+")";
+            System.out.println(priceSql);
+            Statement priceStmt = connection.createStatement();
+            priceStmt.executeUpdate(priceSql);
             
             //Genre connections
             for (int i = 0; i < game.genreList.size(); i++) {

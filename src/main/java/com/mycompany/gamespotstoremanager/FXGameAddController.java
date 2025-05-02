@@ -145,6 +145,12 @@ public class FXGameAddController extends FXController{
         //Release Date
         ZoneId systemZone = ZoneId.systemDefault();
         LocalDate localDate = releaseDatePicker.getValue();
+        
+        if (localDate == null) {
+            standardError("Please select a release date.");
+            return;
+        }
+        
         Date releaseDate = Date.valueOf(localDate);
         
         //ESRB
@@ -177,7 +183,12 @@ public class FXGameAddController extends FXController{
         
         //public Game(long gameId, String gameName, Date releaseDate, int esrbId, String esrb, ArrayList<Genre> genreList, ArrayList<Publisher> publisherList) {
         Game game = new Game(-1, newName, releaseDate, esrbId, esrb, gameGenres, gamePublishers);
-        GameDAO.addGameToDatabase(game);
+        GameDAO.addGameToDatabase(game, price, quantity);
+        long gameId = game.getGameId();
+        System.out.println("New game ID: " + gameId);
+        GameData gameData = new GameData(gameId, game.getGameName(), GenreDAO.getGenresStringForGameId(gameId), PublisherDAO.getPublishersStringForGameId(gameId), esrb);
+        FXGameViewController.setGameData(gameData);
+        MainApp.setRoot("GameView");
     }
     
     @Override
