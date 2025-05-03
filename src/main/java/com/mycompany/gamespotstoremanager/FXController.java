@@ -20,6 +20,11 @@ public abstract class FXController implements Initializable {
     }
     
     @FXML
+    private void switchToCheckout() throws IOException {
+        MainApp.setRoot("Checkout");
+    }
+    
+    @FXML
     public void standardError(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

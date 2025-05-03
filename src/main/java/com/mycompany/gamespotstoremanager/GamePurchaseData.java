@@ -12,19 +12,26 @@ public class GamePurchaseData {
     private double gamePrice;
     private long gameQuantity;
     private long usedId;
+    private String condition;
     
     public GamePurchaseData(GameData gameData, double gamePrice, long gameQuantity) {
         this.gameData = gameData;
         this.gamePrice = gamePrice;
         this.gameQuantity = gameQuantity;
         this.usedId = -1;
+        this.condition = "NEW";
     }
     
-    public GamePurchaseData(GameData gameData, double gamePrice, long gameQuantity, long usedId) {
+    public GamePurchaseData(GameData gameData, double gamePrice, long usedId, String condition) {
         this.gameData = gameData;
         this.gamePrice = gamePrice;
-        this.gameQuantity = gameQuantity;
+        this.gameQuantity = -1;
         this.usedId = usedId;
+        this.condition = condition;
+    }
+    
+    public long getGameId() {
+        return gameData.getGameId();
     }
 
     /**
@@ -81,6 +88,24 @@ public class GamePurchaseData {
      */
     public void setUsedId(long usedId) {
         this.usedId = usedId;
+    }
+    
+    public String getGameName() {
+        return gameData.getGameName();
+    }
+
+    /**
+     * @return the condition
+     */
+    public String getCondition() {
+        return condition;
+    }
+
+    /**
+     * @param condition the condition to set
+     */
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
 }

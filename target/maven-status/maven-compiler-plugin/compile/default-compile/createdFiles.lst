@@ -1,3 +1,4 @@
+com\mycompany\gamespotstoremanager\FXTransactionCompleteController.class
 com\mycompany\gamespotstoremanager\GameData.class
 com\mycompany\gamespotstoremanager\Publisher.class
 com\mycompany\gamespotstoremanager\FXGameAddController.class
@@ -8,6 +9,7 @@ com\mycompany\gamespotstoremanager\DatabaseConnector.class
 com\mycompany\gamespotstoremanager\FXCheckoutController.class
 com\mycompany\gamespotstoremanager\FXController.class
 com\mycompany\gamespotstoremanager\UsedGame.class
+com\mycompany\gamespotstoremanager\CardReaderManager.class
 com\mycompany\gamespotstoremanager\UsedGameDAO.class
 com\mycompany\gamespotstoremanager\FXGameUpdateController.class
 com\mycompany\gamespotstoremanager\GameDAO.class

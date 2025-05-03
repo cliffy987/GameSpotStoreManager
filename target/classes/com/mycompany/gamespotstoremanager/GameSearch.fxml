@@ -52,5 +52,6 @@
       <Button layoutX="31.0" layoutY="397.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
       <Button layoutX="403.0" layoutY="397.0" mnemonicParsing="false" onAction="#viewGamePressed" prefHeight="25.0" prefWidth="163.0" text="View Game Info" />
       <Button layoutX="403.0" layoutY="170.0" mnemonicParsing="false" onAction="#searchPressed" prefHeight="25.0" prefWidth="163.0" text="Search" />
+      <Button layoutX="139.0" layoutY="397.0" mnemonicParsing="false" onAction="#switchToCheckout" prefHeight="25.0" prefWidth="99.0" text="Checkout" />
    </children>
 </AnchorPane>

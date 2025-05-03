@@ -104,7 +104,7 @@ public class FXGameViewController extends FXController {
     private void addUsedToCart() {
         if (usedGameViewTable.getSelectionModel().getSelectedItem() != null) {
             UsedGame usedGame = usedGameViewTable.getSelectionModel().getSelectedItem();
-            GamePurchaseData usedGamePurchase = new GamePurchaseData(gameData, usedGame.getPrice(), -1, usedGame.getUsedId());
+            GamePurchaseData usedGamePurchase = new GamePurchaseData(gameData, usedGame.getPrice(), usedGame.getUsedId(), usedGame.getCondition());
             FXCheckoutController.gamePurchases.add(usedGamePurchase);
             observableUsedGames.remove(usedGame);
         } else {
