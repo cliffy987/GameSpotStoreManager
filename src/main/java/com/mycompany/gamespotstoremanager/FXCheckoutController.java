@@ -65,7 +65,7 @@ public class FXCheckoutController extends FXController {
 
             //Make sure CCV is valid
             String cardCCV = this.cardCCVField.getText();
-            if (CREDIT_CARD_PATTERN.matcher(cardCCV).matches() == false) {
+            if (CCV_PATTERN.matcher(cardCCV).matches() == false) {
                 standardError("Card CCV invalid.");
                 return;
             }
@@ -92,17 +92,25 @@ public class FXCheckoutController extends FXController {
         }
         
         //Successful purchase; remove games from database
-        for (GamePurchaseData game : gamePurchases) {
+        for (GamePurchaseData gameData : gamePurchases) {
+            //Left off here; Add purchase records for both new and used
             
-            if (game.getUsedId() > 0) {
+            int conditionId = UsedGameDAO.getConditionIdFromString(gameData.getCondition());
+            //Timestamp not necessary because its automatically added
+            
+            String recSql = "INSERT INTO purchases (game_id, price, game_condition_id) VALUES("+gameData.getGameId()+","+gameData.getGamePrice()+","+conditionId+")";
+            DatabaseConnector.insertGetId(recSql);
+            
+            if (gameData.getUsedId() > 0) {
                 //Used
-                UsedGameDAO.removeUsedGame(game.getUsedId());
+                UsedGameDAO.removeUsedGame(gameData.getUsedId());
             } else {
                 //New
-                GameDAO.adjustNewQuantity(game.getGameId(), -1);
+                GameDAO.adjustNewQuantity(gameData.getGameId(), -1);
             }
         }
         
+        gamePurchases.clear();
         MainApp.setRoot("TransactionComplete");
     }
     
@@ -116,7 +124,6 @@ public class FXCheckoutController extends FXController {
         NumberFormat costFormat = NumberFormat.getCurrencyInstance(Locale.US);
         String costString = costFormat.format(totalPrice);
         totalPriceText.setText("Total: " + costString);
-        
         
         //Set up expiration month menu
         for (MenuItem menuItem : cardMonthMenu.getItems()) {

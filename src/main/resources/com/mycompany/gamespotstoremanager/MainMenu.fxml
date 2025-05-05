@@ -12,7 +12,8 @@
             <Font name="System Bold" size="32.0" />
          </font>
       </Text>
-      <Button layoutX="254.0" layoutY="73.0" mnemonicParsing="false" onAction="#switchToGameSearch" text="Search Games" />
-      <Button layoutX="264.0" layoutY="105.0" mnemonicParsing="false" onAction="#switchToGameAdd" text="Add Game" />
+      <Button layoutX="232.0" layoutY="71.0" mnemonicParsing="false" onAction="#switchToGameSearch" prefHeight="25.0" prefWidth="136.0" text="Search Games" />
+      <Button layoutX="232.0" layoutY="103.0" mnemonicParsing="false" onAction="#switchToGameAdd" prefHeight="25.0" prefWidth="136.0" text="Add Game" />
+      <Button layoutX="232.0" layoutY="136.0" mnemonicParsing="false" onAction="#switchToViewPurchases" prefHeight="25.0" prefWidth="136.0" text="View Purchases" />
    </children>
 </AnchorPane>

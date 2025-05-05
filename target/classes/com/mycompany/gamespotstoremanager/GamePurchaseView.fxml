@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.gamespotstoremanager.FXGamePurchaseViewController">
+   <children>
+      <Text layoutX="178.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Purchases">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Text>
+      <TableView fx:id="purchaseViewTable" layoutX="31.0" layoutY="66.0" prefHeight="312.0" prefWidth="536.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="230.4000015258789" text="Name" />
+            <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="85.199951171875" text="Price" />
+            <TableColumn fx:id="conditionColumn" minWidth="0.0" prefWidth="84.0" text="Condition" />
+          <TableColumn fx:id="timestampColumn" prefWidth="139.59994506835938" text="Timestamp" />
+        </columns>
+      </TableView>
+      <Button layoutX="31.0" layoutY="397.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
+   </children>
+</AnchorPane>

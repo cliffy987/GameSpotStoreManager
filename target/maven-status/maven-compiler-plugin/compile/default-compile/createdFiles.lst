@@ -8,7 +8,9 @@ com\mycompany\gamespotstoremanager\Genre.class
 com\mycompany\gamespotstoremanager\DatabaseConnector.class
 com\mycompany\gamespotstoremanager\FXCheckoutController.class
 com\mycompany\gamespotstoremanager\FXController.class
+com\mycompany\gamespotstoremanager\PurchaseRecordDAO.class
 com\mycompany\gamespotstoremanager\UsedGame.class
+com\mycompany\gamespotstoremanager\FXGamePurchaseViewController.class
 com\mycompany\gamespotstoremanager\CardReaderManager.class
 com\mycompany\gamespotstoremanager\UsedGameDAO.class
 com\mycompany\gamespotstoremanager\FXGameUpdateController.class
@@ -17,6 +19,7 @@ com\mycompany\gamespotstoremanager\GenreDAO.class
 com\mycompany\gamespotstoremanager\PublisherDAO.class
 com\mycompany\gamespotstoremanager\FXGameViewController.class
 com\mycompany\gamespotstoremanager\Game.class
+com\mycompany\gamespotstoremanager\PurchaseRecord.class
 com\mycompany\gamespotstoremanager\FXGameSearchController.class
 com\mycompany\gamespotstoremanager\GamePurchaseData.class
 com\mycompany\gamespotstoremanager\FXMainMenuController.class

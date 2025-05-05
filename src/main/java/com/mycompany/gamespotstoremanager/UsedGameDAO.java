@@ -43,6 +43,22 @@ public class UsedGameDAO {
         
     }
     
+    public static int getConditionIdFromString(String condition) {
+        String sql = "SELECT * FROM game_condition WHERE game_condition = " + "\"" + condition + "\"";
+        
+        try (Connection connection = DatabaseConnector.getConnection()) {
+            Statement stmt = connection.createStatement();
+            ResultSet res = stmt.executeQuery(sql);
+            res.next();
+            int id = res.getInt("game_condition_id");
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return -1;
+    }
+    
     public static void removeUsedGame(long usedId) {
         String sql = "DELETE FROM used_game_stock WHERE used_id = " + usedId; 
         DatabaseConnector.runOnDatabase(sql);
