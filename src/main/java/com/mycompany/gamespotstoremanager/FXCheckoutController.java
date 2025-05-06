@@ -52,6 +52,23 @@ public class FXCheckoutController extends FXController {
     private static final Pattern CCV_PATTERN = Pattern.compile("^\\d{3}$");
     
     @FXML
+    private void removeFromCartPressed() throws IOException {
+        GamePurchaseData data = gameViewTable.getSelectionModel().getSelectedItem();
+        gamePurchases.remove(data);
+        updateCart();
+        
+        if (data.getUsedId() == -1) {
+            //Update temp new-copy quantity
+            FXGameViewController.incrementTempQuantity(data.getGameId(), 1);
+        } else {
+            //Re-add temp used game
+            UsedGame usedGame = new UsedGame(data.getUsedId(), data.getGameData(), data.getGamePrice(), data.getCondition());
+            FXGameViewController.addTempUsedGame(data.getGameId(), usedGame);
+        }
+       
+    }
+    
+    @FXML
     private void purchasePressed() throws IOException {
         
         //Pay with card
@@ -114,6 +131,16 @@ public class FXCheckoutController extends FXController {
         MainApp.setRoot("TransactionComplete");
     }
     
+    private void updateCart() {
+        ObservableList<GamePurchaseData> observableGames = FXCollections.observableArrayList(gamePurchases);
+        
+        gameNameColumn.setCellValueFactory(new PropertyValueFactory<GamePurchaseData, String>("gameName"));
+        gamePriceColumn.setCellValueFactory(new PropertyValueFactory<GamePurchaseData, Double>("gamePrice"));
+        gameConditionColumn.setCellValueFactory(new PropertyValueFactory<GamePurchaseData, String>("condition"));
+
+        gameViewTable.setItems(observableGames);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Get total
@@ -134,12 +161,7 @@ public class FXCheckoutController extends FXController {
         }
        
         //Set up game list
-        ObservableList<GamePurchaseData> observableGames = FXCollections.observableArrayList(gamePurchases);
-       
-        gameNameColumn.setCellValueFactory(new PropertyValueFactory<GamePurchaseData, String>("gameName"));
-        gamePriceColumn.setCellValueFactory(new PropertyValueFactory<GamePurchaseData, Double>("gamePrice"));
-        gameConditionColumn.setCellValueFactory(new PropertyValueFactory<GamePurchaseData, String>("condition"));
-
-        gameViewTable.setItems(observableGames);
+        updateCart();
+        
     }
 }

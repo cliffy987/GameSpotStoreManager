@@ -22,7 +22,7 @@
       <TextField fx:id="cardCCVField" layoutX="205.0" layoutY="291.0" prefHeight="25.0" prefWidth="39.0" text="CCV" />
       <TextField fx:id="cardYearField" layoutX="151.0" layoutY="324.0" prefHeight="25.0" prefWidth="94.0" text="Exp. Year" />
       <Button layoutX="39.0" layoutY="360.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="99.0" text="Main Menu" />
-      <TableView fx:id="gameViewTable" layoutX="38.0" layoutY="68.0" prefHeight="184.0" prefWidth="520.0">
+      <TableView fx:id="gameViewTable" layoutX="38.0" layoutY="68.0" prefHeight="158.0" prefWidth="520.0">
         <columns>
           <TableColumn fx:id="gameNameColumn" prefWidth="213.60001373291016" text="Game Name" />
           <TableColumn fx:id="gamePriceColumn" minWidth="0.0" prefWidth="86.800048828125" text="Price" />
@@ -52,5 +52,6 @@
             <MenuItem mnemonicParsing="false" text="12" />
         </items>
       </MenuButton>
+      <Button layoutX="396.0" layoutY="233.0" mnemonicParsing="false" onAction="#removeFromCartPressed" text="Remove Selection from Cart" />
    </children>
 </AnchorPane>
