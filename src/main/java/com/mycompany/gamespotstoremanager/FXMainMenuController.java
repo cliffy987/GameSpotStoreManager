@@ -21,6 +21,11 @@ public class FXMainMenuController extends FXController {
     private void switchToViewPurchases() throws IOException {
         MainApp.setRoot("GamePurchaseView");
     }
+    
+    @FXML
+    private void switchToGameAudit() throws IOException {
+        MainApp.setRoot("GameAuditView");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

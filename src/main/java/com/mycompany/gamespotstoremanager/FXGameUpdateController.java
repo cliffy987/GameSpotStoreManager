@@ -102,6 +102,8 @@ public class FXGameUpdateController extends FXController{
         Genre genre = GenreDAO.getGenreFromId(genreId);
         gameGenres.add(genre);
         gameData.setGameGenres(GenreDAO.getGenresStringForGameId(gameData.getGameId()));
+        
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "ADDED GENRE: " + genreName);
     }
     
     @FXML
@@ -129,6 +131,8 @@ public class FXGameUpdateController extends FXController{
         Publisher publisher = PublisherDAO.getPublisherFromId(publisherId);
         gamePublishers.add(publisher);
         gameData.setGamePublishers(PublisherDAO.getPublishersStringForGameId(gameData.getGameId()));
+        
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "ADDED PUBLISHER: " + publisherName);
     }
     
     @FXML
@@ -162,38 +166,57 @@ public class FXGameUpdateController extends FXController{
             System.out.println(usedId);
             UsedGame usedGame = new UsedGame(usedId, gameData, price, conditionMenu.getText());
             usedCopies.add(usedGame);
+            GameAuditDataDAO.addAudit(gameData.getGameId(), "ADDED USED: " + usedGame.getCondition() + " $" + usedGame.getPrice());
         }
+        
+        
     }
     
     @FXML
     private void removeGenrePressed() throws IOException {
         Genre genre = genreViewTable.getSelectionModel().getSelectedItem();
+        
+        if (genre == null)
+            return;
+        
         long genreId = genre.getGenreId();
         GenreDAO.removeGenreFromGame(gameData.getGameId(), genreId);
         gameGenres.remove(genre);
         gameData.setGameGenres(GenreDAO.getGenresStringForGameId(gameData.getGameId()));
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "REMOVED GENRE: " + genre.getName());
     }
     
     @FXML
     private void removePublisherPressed() throws IOException {
         Publisher publisher = publisherViewTable.getSelectionModel().getSelectedItem();
+        
+        if (publisher == null)
+            return;
+        
         long publisherId = publisher.getPublisherId();
         PublisherDAO.removePublisherFromGame(gameData.getGameId(), publisherId);
         gamePublishers.remove(publisher);
         gameData.setGamePublishers(PublisherDAO.getPublishersStringForGameId(gameData.getGameId()));
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "REMOVED PUBLISHER: " + publisher.getName());
     }
     
     @FXML
     private void removeUsedPressed() throws IOException {
         UsedGame copy = usedGameViewTable.getSelectionModel().getSelectedItem();
+        
+        if (copy == null)
+            return;
+        
         long usedId = copy.getUsedId();
         UsedGameDAO.removeUsedGame(usedId);
         usedCopies.remove(copy);
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "REMOVED USED: " + copy.getCondition() + " $" + copy.getPrice());
     }
     
     @FXML
     private void updateNamePressed() throws IOException {
         String newName = newNameField.getText();
+        String oldName = gameData.getGameName();
         
         //Don't want blank names
         if (newName.isBlank()) {
@@ -204,10 +227,13 @@ public class FXGameUpdateController extends FXController{
         GameDAO.updateGameName(gameData.getGameId(), newName);
         gameData.setGameName(newName);
         nameText.setText("Name: " + newName);
+        
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "NAME CHANGE: " + oldName + " -> " + newName);
     }
     
     @FXML
     private void updatePricePressed() throws IOException {
+        double oldPrice = purchaseData.getGamePrice();
         double price = 0;
         try {
             price = Double.parseDouble(newPriceField.getText());
@@ -222,10 +248,13 @@ public class FXGameUpdateController extends FXController{
         GameDAO.updateGamePrice(gameData.getGameId(), price);
         purchaseData.setGamePrice(price);
         newPriceText.setText("New-Copy Price: $" + price);
+        
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "PRICE CHANGE: " + oldPrice + " -> " + price);
     }
     
     @FXML
     private void updateQuantityPressed() throws IOException {
+        long oldQuantity = purchaseData.getGameQuantity();
         long addQuantity = 0;
         try {
             addQuantity = Long.parseLong(newQuantityField.getText());
@@ -239,6 +268,8 @@ public class FXGameUpdateController extends FXController{
         purchaseData.setGameQuantity(newQuantity);
         FXGameViewController.updateTempQuantity(gameData.getGameId(), newQuantity);
         newQuantityText.setText("New-Copy Quantity: " + newQuantity);
+        
+        GameAuditDataDAO.addAudit(gameData.getGameId(), "QUANTITY CHANGE: " + oldQuantity + " -> " + newQuantity);
     }
     
     @FXML
@@ -267,8 +298,10 @@ public class FXGameUpdateController extends FXController{
         for (MenuItem menuItem : ratingMenu.getItems()) {
             menuItem.setOnAction(e -> {
                 String newRating = menuItem.getText();
+                String oldRating = ratingText.getText();
                 ratingText.setText("Age Rating: " + newRating); 
                 gameData.setGameRating(newRating);
+                GameAuditDataDAO.addAudit(gameData.getGameId(), "RATING CHANGE: " + oldRating + " -> " + newRating);
                 if (newRating.equals("NR"))
                     GameDAO.updateGameESRB(gameData.getGameId(), 1);
                 else if (newRating.equals("E"))

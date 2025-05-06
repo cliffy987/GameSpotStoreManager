@@ -64,13 +64,15 @@ public class GameDAO {
         try (Connection connection = DatabaseConnector.getConnection()) {
 
             //The actual Game entry
-            String gameSql = "INSERT INTO games (game_name,release_date,esrb_id) " +
-                         "VALUES (?, ?, ?)";
+            String gameSql = "INSERT INTO games (game_name,release_date,esrb_id,new_copy_price,new_copy_quantity) " +
+                         "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement gamePstmt = connection.prepareStatement(gameSql);
 
             gamePstmt.setString(1, game.getGameName()); //game_name
             gamePstmt.setDate(2, game.getReleaseDate()); //release_date
             gamePstmt.setInt(3, game.getEsrbId()); //esrb_id
+            gamePstmt.setDouble(4, newPrice); //price
+            gamePstmt.setLong(5, newQuantity); //quantity
             
             gamePstmt.executeUpdate();
             
@@ -81,12 +83,6 @@ public class GameDAO {
             gameIdResultSet.next();
             long gameId = gameIdResultSet.getLong("game_id");
             game.setGameId(gameId);
-            
-            //Fixed price stock connection
-            String priceSql = "INSERT INTO fixed_price_stock (game_id,price,quantity) VALUES("+gameId+","+newPrice+","+newQuantity+")";
-            System.out.println(priceSql);
-            Statement priceStmt = connection.createStatement();
-            priceStmt.executeUpdate(priceSql);
             
             //Genre connections
             for (int i = 0; i < game.genreList.size(); i++) {
@@ -114,9 +110,7 @@ public class GameDAO {
                 publisherPstmt.setLong(2, publisher.getPublisherId());
                 
                 publisherPstmt.executeUpdate();
-            }
-            
-            
+            }  
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,7 +129,7 @@ public class GameDAO {
     }
     
     public static void updateGamePrice(long gameId, double newPrice) {
-        String sql = "UPDATE fixed_price_stock SET price = "+ newPrice +" WHERE game_id = "+ gameId;
+        String sql = "UPDATE games SET new_copy_price = "+ newPrice +" WHERE game_id = "+ gameId;
         DatabaseConnector.runOnDatabase(sql);
     }
     
@@ -180,14 +174,14 @@ public class GameDAO {
     public static long adjustNewQuantity(long gameId, long adjustment) {
         try (Connection connection = DatabaseConnector.getConnection()) {
         
-            String gameSql = "SELECT * FROM fixed_price_stock WHERE game_id = " + gameId;
+            String gameSql = "SELECT * FROM games WHERE game_id = " + gameId;
             Statement gameStatement = connection.createStatement();
             ResultSet resultSet = gameStatement.executeQuery(gameSql);
             resultSet.next(); //There can only be one result, since game_id has the UNIQUE constraint
-            long gameQuantity = resultSet.getLong("quantity");
+            long gameQuantity = resultSet.getLong("new_copy_quantity");
             long adjustedGameQuantity = gameQuantity + adjustment;
             
-            String updateSql = "UPDATE fixed_price_stock SET quantity = "+ adjustedGameQuantity +" WHERE game_id = "+ gameId;
+            String updateSql = "UPDATE games SET new_copy_quantity = "+ adjustedGameQuantity +" WHERE game_id = "+ gameId;
             Statement updateStatement = connection.createStatement();
             updateStatement.execute(updateSql);
             
@@ -203,12 +197,12 @@ public class GameDAO {
     public static GamePurchaseData getNewGamePurchaseData(GameData gameSearch) {
         try (Connection connection = DatabaseConnector.getConnection()) {
         
-            String gameSql = "SELECT * FROM fixed_price_stock WHERE game_id = " + gameSearch.getGameId();
+            String gameSql = "SELECT * FROM games WHERE game_id = " + gameSearch.getGameId();
             Statement gameStatement = connection.createStatement();
             ResultSet resultSet = gameStatement.executeQuery(gameSql);
             resultSet.next(); //There can only be one result, since game_id has the UNIQUE constraint
-            double gamePrice = resultSet.getDouble("price");
-            long gameQuantity = resultSet.getLong("quantity");
+            double gamePrice = resultSet.getDouble("new_copy_price");
+            long gameQuantity = resultSet.getLong("new_copy_quantity");
             GamePurchaseData gamePurchase = new GamePurchaseData(gameSearch, gamePrice, gameQuantity);
             
             return gamePurchase;

@@ -24,11 +24,6 @@ public class FXGamePurchaseViewController extends FXController {
     @FXML private TableColumn<PurchaseRecord, Double> priceColumn;
     @FXML private TableColumn<PurchaseRecord, String> conditionColumn;
     @FXML private TableColumn<PurchaseRecord, Timestamp> timestampColumn;
-    
-    private String nameEntered = "";
-    private String genreEntered = "";
-    private String publisherEntered = "";
-    private int esrbId = -1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
