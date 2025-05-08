@@ -4,10 +4,12 @@
  */
 package com.mycompany.gamespotstoremanager;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,14 +46,15 @@ public class UsedGameDAO {
     }
     
     public static int getConditionIdFromString(String condition) {
-        String sql = "SELECT * FROM game_condition WHERE game_condition = " + "\"" + condition + "\"";
+        String sql = "{CALL condition_id_from_string(?,?)}";
         
         try (Connection connection = DatabaseConnector.getConnection()) {
-            Statement stmt = connection.createStatement();
-            ResultSet res = stmt.executeQuery(sql);
-            res.next();
-            int id = res.getInt("game_condition_id");
-            return id;
+            CallableStatement cs = connection.prepareCall(sql);
+            cs.setString(1, condition);
+            cs.registerOutParameter(2, Types.INTEGER);
+            cs.execute();
+            int conditionId = cs.getInt(2);
+            return conditionId;
         } catch (SQLException e) {
             e.printStackTrace();
         }
