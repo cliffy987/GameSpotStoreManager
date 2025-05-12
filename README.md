@@ -69,7 +69,7 @@ Preparing to add a new game to the database:
 Performing the same search as before and having the new game appear:
  ![image](https://github.com/user-attachments/assets/a0f9fed2-7b31-41c1-a513-1e389201508c)
 
-##License
+## License
 
 Copyright 2025 Ernest Whitehead
 
