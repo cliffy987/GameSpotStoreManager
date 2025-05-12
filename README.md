@@ -4,8 +4,8 @@ A desktop application designed for use by store clerks of a fictional company ca
 
 ## Features:
 
-	- Keeping track of stock (games) both new and used.
-	- Creating listings for new games.
+  - Keeping track of stock (games) both new and used.
+  - Creating listings for new games.
   - Performing game searches based on name, publisher, genre and age rating to help customers select a game to purchase.
   - Modifying a game’s information; including adjusting the new-copy stock or adding used-copy listings.
   - Keeping records of modifications made to a game’s information.
@@ -20,7 +20,7 @@ A desktop application designed for use by store clerks of a fictional company ca
 
 ## System Overview:
 
-In order for the front end to send and retrieve information from the database: 
+In order for the front end to communicate with the database: 
   - The frontend invokes method calls within the control layer.
   - The control layer gathers information from relevant user-entered fields and formats the information into a query string.
   - The query string is run on the database via Java Database Connector.
@@ -49,19 +49,26 @@ Getting all games with the “Action” genre and an E10+ rating.
 ![image](https://github.com/user-attachments/assets/a4760315-8ebe-49d5-89ec-43d4b504d11a)
 
 Changing the name of a game and removing a genre from it:
+![image](https://github.com/user-attachments/assets/43dab53a-b62d-4fd7-a8c2-6d5ee39464d1)
  
-Reviewing the changes we just made:
+Reviewing the changes:
+![image](https://github.com/user-attachments/assets/c48fbea5-620f-4d33-90aa-6049f307e4f5)
 
 Adding new and used copies to the cart
+![image](https://github.com/user-attachments/assets/e63bb5dc-f5cc-4982-a5c9-4af4bf071a46)
 
 The cart displaying the games we added before purchase:
+![image](https://github.com/user-attachments/assets/9479eb69-7ddc-49bd-899d-b4fc09ae0d86)
 
 Reviewing the purchase:
- 
+ ![image](https://github.com/user-attachments/assets/6a16df8f-4cd0-4b6c-8073-4caaa7afee09)
+
 Preparing to add a new game to the database:
+![image](https://github.com/user-attachments/assets/1d1ccb4a-260b-42a9-8d67-9dd6e230f7e3)
 
 Performing the same search as before and having the new game appear:
- 
+ ![image](https://github.com/user-attachments/assets/a0f9fed2-7b31-41c1-a513-1e389201508c)
+
 ##License
 
 Copyright 2025 Ernest Whitehead
