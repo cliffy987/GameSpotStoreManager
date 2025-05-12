@@ -1,6 +1,6 @@
 # GameSpot Store Manager
 
-A desktop application designed for use by store clerks of a fictional company called GameSpot. Users are able to keep track of stock, sales records, as well as selling games to customers and updating information about game listings.
+A desktop application designed for use by store clerks of a fictional company called GameSpot. Users are able to keep track of stock and sales records, as well as selling games to customers and updating information about game listings.
 
 ## Features:
 
