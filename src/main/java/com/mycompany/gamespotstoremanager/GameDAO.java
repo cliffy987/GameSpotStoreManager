@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.lang.IllegalArgumentException;
 
 /**
  *
@@ -159,6 +160,8 @@ public class GameDAO {
     }
     
     public static String getEsrbFromId(Integer esrbId) {
+        if (esrbId < 1 || esrbId > 5)
+            throw new IllegalArgumentException();
         setupIdEsrb();
         return IdEsrb.get(esrbId);
     }

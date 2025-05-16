@@ -1,0 +1,4 @@
+--patch-module
+com.mycompany.gamespotstoremanager=_
+--add-reads
+com.mycompany.gamespotstoremanager=ALL-UNNAMED
